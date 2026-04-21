@@ -1,17 +1,19 @@
-# my_app
+# Flutter First App
 
-A new Flutter project.
+## Overview
+This is a Flutter app created as part of my learning process.
+I am following this tutorial:
+https://youtu.be/HQ_ytw58tC4
 
-## Getting Started
+## Goal
+- Learn Flutter basics
+- Understand UI layout and widgets
 
-This project is a starting point for a Flutter application.
+## Progress
+- 2026/04/21: Initial setup completed (watched up to 30:00)
+  Learned project structure and basic widgets
 
-A few resources to get you started if this is your first Flutter project:
+-2026/04/22:
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Next Steps
+- Continue video
