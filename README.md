@@ -3,8 +3,7 @@
 ## Overview
 This is a Flutter app created as part of my learning process.
 I am following this tutorial:
-https://youtu.be/HQ_ytw58tC4
-
+[https://youtu.be/HQ_ytw58tC4]
 ## Goal
 - Learn Flutter basics
 - Understand UI layout and widgets
@@ -14,6 +13,16 @@ https://youtu.be/HQ_ytw58tC4
   Learned project structure and basic widgets
 
 -2026/04/22:
+ Learned Stateless Widget and Buttons
+ 
+-2026/04/23:
+ Learned TextField and ListView
+ 
+-2026/04/25:
+Drawer
+-2026/04/26:
+Learned about Button Navigation and Switch Slide
+
 
 ## Next Steps
 - Continue video
