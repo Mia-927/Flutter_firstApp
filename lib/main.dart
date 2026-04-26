@@ -1,67 +1,96 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:my_app/cat_counter.dart';
-
-/*void main(){
-  const c = CatCounter();
-
-}*/
-
-void main() {
-    runApp(const MaterialApp
-    (
-      home: Scaffold(
-        body: Center(
-          child: CatCounter(),
-        ),
-      ),
-    ));
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+main(){
+  runApp(ProviderScope(child: MaterialApp(home: Home())));
 }
 
-/*class MyApp extends StatelessWidget{
-  const MyApp({super.key});
+//選べれたラジオボタンのID
+final radioIdProvider = StateProvider<String?>(
+  (ref){
+    return null;
+  },
+);
 
-  @override
-  Widget build(BuildContext context){
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.deepPurple[100],
-        appBar: AppBar(
-          title: Text("My App Bar"),
-          backgroundColor: Colors.deepPurple,
-          elevation: 0,
-          leading: Icon(Icons.logout),
-          actions: [
-            IconButton(
-              onPressed: () {},
-             icon: Icon(Icons.logout),
-            ),
-          ],
+//選べれたチェックボックスIDたち
+final checkedIdsProvider = StateProvider<Set<String>>(
+  (ref){
+    return {};
+  },
+);
+
+class Home extends ConsumerWidget{
+  const Home({super.key});
+
+  @override 
+  Widget build(BuildContext context, WidgetRef ref){
+    //ラジオボタンIDに合わせて画面を変化
+    final radioId = ref.watch(radioIdProvider);
+    //チェックボックスに合わせる
+    final checkIds = ref.watch(checkedIdsProvider);
+
+    //ラジオボタン押され時の関数
+    onChangedRadio(String? id){
+      ref.read(radioIdProvider.notifier).state = id;
+    }
+
+    //チェックボタン押され時の関数
+    onChangedCheckbox(String id){
+      final newSet = Set.of(checkIds);
+
+      if(newSet.contains(id)){
+        //チェック済みなら削除
+        newSet.remove(id);
+      }else{
+        //未チェックなら追加
+        newSet.add(id);
+      }
+      ref.read(checkedIdsProvider.notifier).state = newSet;
+    }
+    return Scaffold(
+      body: Column(
+      children:[
+        //radio
+        RadioListTile(
+          value:'A',
+          groupValue: radioId,
+          onChanged:onChangedRadio,
+          title: const Text('ラジオA'),
         ),
-        body:Center(
-          child: Container(
-            height: 300,
-            width: 300,
-            //Boxデコ
-            decoration: BoxDecoration(
-              color: Colors.blue[100],
-              //curve the corner
-              borderRadius:BorderRadius.circular(20),
-            ),
-            padding: EdgeInsets.all(25),//left:,topなど方向を決めることもできる
-            child: Icon(
-                    Icons.favorite,
-                    color:Colors.white,
-                    size: 64,
-                   )
-          ),
-        )
-        body: Column(
 
-        )
-      ),
+        RadioListTile(
+          value:'B',
+          groupValue: radioId,
+          onChanged:onChangedRadio,
+          title: const Text('ラジオB'),
+        ),
+
+        RadioListTile(
+          value:'C',
+          groupValue: radioId,
+          onChanged:onChangedRadio,
+          title: const Text('ラジオC'),
+        ),
+
+        //チェック
+        CheckboxListTile(
+          onChanged:(checked) => onChangedCheckbox('A'),
+          value: checkIds.contains('A'),
+          title: const Text('ラジオA'),
+        ),
+
+        CheckboxListTile(
+          onChanged:(checked) => onChangedCheckbox('B'),
+          value:checkIds.contains('B'),
+          title: const Text('ラジオB'),
+        ),
+
+        CheckboxListTile(
+          onChanged:(checked) => onChangedCheckbox('C'),
+          value:checkIds.contains('C'),
+          title: const Text('ラジオC'),
+        ),
+      ],
+    ),
     );
   }
-}*/
+}
