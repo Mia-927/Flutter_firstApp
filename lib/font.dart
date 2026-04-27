@@ -1,15 +1,23 @@
+//色々苦しんだ。1番のショックはGoogle Fontの制限が思ったりきついこと
+//ずっと入れようとしてたのに入らなかった。ぴえん
 import 'package:flutter/material.dart';
-/*import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';*/
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 //メイン関数
-main() {
-  
+/*main() {
+  LicenseRegistry.addLicense(() async* {
+    final license = await rootBundle.loadString(
+      'google_fonts/OFL.txt',
+    );
+    yield LicenseEntryWithLineBreaks(
+      ['google_fonts'],
+      license,
+    );
+  });
   const app = MyApp();
   runApp(app);
-}
+}*/
 //アプリ本体
 class MyApp extends StatelessWidget{
   const MyApp({super.key});

@@ -1,0 +1,21 @@
+{
+    "title":"かれー"
+    "calories": 600,
+    "Tomato": [
+        {
+            "name":"玉ねぎ",
+            "color":"からめる",
+            "season":"春"
+        },
+        {
+            "name":"にんじん",
+            "color":"おれんじ",
+            "season":"冬"
+        },
+        {
+            "name":"じゃがいも",
+            "color":"白",
+            "season":"秋"
+        },
+    ]
+}
