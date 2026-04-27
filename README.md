@@ -22,7 +22,8 @@ I am following this tutorial:
 Drawer
 -2026/04/26:
 Learned about Button Navigation and Switch Slide
-
+-2026/04/27
+Learned about Radio/Checkbox and ProgressIndicator
 
 ## Next Steps
 - Continue video
