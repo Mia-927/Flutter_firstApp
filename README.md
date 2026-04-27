@@ -27,3 +27,5 @@ Learned about Radio/Checkbox and ProgressIndicator
 
 ## Next Steps
 - Continue video
+- 2026/04/28 Goal
+  freezed and Carousel 
