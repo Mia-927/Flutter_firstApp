@@ -28,3 +28,5 @@ Learned about Radio/Checkbox and ProgressIndicator
   Learned about freezed and Carousel 
 ## Next Steps
 - Continue video
+- 2026/04/29 Goal
+  Create and complete ToDo list datafile
