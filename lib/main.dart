@@ -6,7 +6,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 //メイン関数
 main() {
-  
+  const flavor = String.fromEnvironment('flavor');
+  if(flavor == 'dev'){
+    //devのときだけ
+  }
+  if(flavor == 'stg'){
+    //stgのときだけ
+  }
+  if(flavor == 'prd'){
+    //prdのときだけ
+  }
   const app = MyApp();
   runApp(app);
 }
