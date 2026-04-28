@@ -24,8 +24,7 @@ Drawer
 Learned about Button Navigation and Switch Slide
 -2026/04/27
 Learned about Radio/Checkbox and ProgressIndicator
-
+- 2026/04/28 
+  Learned about freezed and Carousel 
 ## Next Steps
 - Continue video
-- 2026/04/28 Goal
-  freezed and Carousel 
