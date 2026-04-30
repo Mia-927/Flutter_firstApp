@@ -25,7 +25,13 @@ Learned about Button Navigation and Switch Slide
 -2026/04/27
 Learned about Radio/Checkbox and ProgressIndicator
 - 2026/04/28 
-  Learned about freezed and Carousel 
+  Learned about freezed and Carousel
+- 2026/04/29
+  Learned about JSON and Font
+- 2026/04/30
+  Start creating a todo app
+  
+- Learned 
 ## Next Steps
 - Continue video
 - 2026/04/29 Goal
