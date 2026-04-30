@@ -5,10 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class ToDo{
   //Step1　リストを作る
   List<String> _todoLst = [];
-  //controller.textでユーザーインプットが取れる！
-  //final controller = TextEditingController();
-  //まだ保留
-  ToDo(){}
 
 //Step2　テキストボックスから追加、
 addToDo(String text){
@@ -18,19 +14,13 @@ addToDo(String text){
 removeToDo(String text){
   _todoLst.remove(text);
 }
+
 changeToDo(String text, int index){
   _todoLst[index] = text;
 }
+
 List<String> getToDo()
 {
   return _todoLst;
 }
 }
-//あとでデザイン用のUIに入れる
-/*final input = TextField(
-    decoration: InputDecoration(
-      labelText:'ToDo',
-      hintText: 'example: study',
-    )
-    controller: controller,
-  );*/
