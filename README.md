@@ -30,9 +30,10 @@ Learned about Radio/Checkbox and ProgressIndicator
   Learned about JSON and Font
 - 2026/04/30
   Start creating a todo app
-  
+   2026/05/01 Goal
+  Create and complete ToDo list datafile
 ## Next Steps
 - Continue video
+- 
 - finish todo app
-- 2026/04/29 Goal
-  Create and complete ToDo list datafile
+
