@@ -4,23 +4,26 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /*安心安全のクラス　”やることを追加できるようにしよう！！” */
 class ToDo{
   //Step1　リストを作る
-  List<String> _todoLst = [];
+  String text = "";
+  bool checked = false;
+
+  ToDo(String text, bool checked)
+  {
+    this.text = text;
+    this.checked = checked;
+  }
 
 //Step2　テキストボックスから追加、
-addToDo(String text){
-  _todoLst.add(text);
-}
-//Step３　編集できるようにする
-removeToDo(String text){
-  _todoLst.remove(text);
+changeToDo(String text){
+  this.text = text;
 }
 
-changeToDo(String text, int index){
-  _todoLst[index] = text;
-}
-
-List<String> getToDo()
+String getText()
 {
-  return _todoLst;
+  return text;
+}
+bool getCheck()
+{
+  return checked;
 }
 }

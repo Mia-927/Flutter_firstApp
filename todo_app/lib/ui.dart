@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'todo.dart';
  /*完了チェック（チェックボックス）
   完了したら見た目変える（取り消し線とか）
   タスク編集*/
@@ -8,44 +8,61 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class UI extends StatefulWidget {
   const UI({super.key});
   
-   @override
+  @override
+  State<UI> createState() => _UIState();
+}
+class _UIState extends State<UI>{
+  @override
+  List<ToDo> _todoLst = [];//ここ分からんどっかで入力したい
+  final controller = TextEditingController();
+
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(title: Text("ToDo")),
       body: Column(
         children: [
           TextField(
-          decoration: InputDecoration(
-            labelText:'ToDo',
-            hintText: 'example: study',
-          )
+            controller: controller,
+            decoration: InputDecoration(
+              labelText:'ToDo',
+              hintText: 'example: study',
+            )
         ),
         
         ElevatedButton(
-          onPressed: true, 
-          child: Text('追加'),
+          child: Text("追加"),//ここもいまいち
+          onPressed:(){
+           setState(()
+            {
+              _todoLst.add(ToDo(controller.text, false));
+            });
+          }
+          
         ),
 
         //controller: controller,
         Expanded(
-          ListView.builder(
-            child: ,
-            itemCount: getTodo().length,
+          child: ListView.builder(
+            itemCount: _todoLst.length,
             itemBuilder: (context, index){
               return CheckboxListTile(
-                onChanged: (value) {},
-                value: false,//なんで？
-                title:Text(todos[index]),
-              ),
+                onChanged: (value) {
+                  setState((){
+                    _todoLst[index].checked = value!;
+                  });
+                },
+                value: _todoLst[index].getCheck(),//なんで？
+                title:Text(_todoLst[index].getText()),
+              );
             }
           )
         )
 
         ]
         )
-    )
+    );
     //controller.textでユーザーインプットが取れる！
-    final controller = TextEditingController();
+    //
     
     
 
