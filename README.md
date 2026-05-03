@@ -36,6 +36,7 @@ Learned about Radio/Checkbox and ProgressIndicator
   Create and complete ToDo list UI
 ## Next Steps
 - Continue video
-
+-  2026/05/02 Goal
+  Complete ToDo
 - finish todo app
 
