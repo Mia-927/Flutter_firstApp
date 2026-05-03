@@ -32,8 +32,10 @@ Learned about Radio/Checkbox and ProgressIndicator
   Start creating a todo app
    2026/05/01 Goal
   Create and complete ToDo list datafile
+   2026/05/02
+  Create and complete ToDo list UI
 ## Next Steps
 - Continue video
-- 
+
 - finish todo app
 
