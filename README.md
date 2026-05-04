@@ -33,7 +33,9 @@ Learned about Radio/Checkbox and ProgressIndicator
    2026/05/01 Goal
   Create and complete ToDo list datafile
    2026/05/02
-  Create and complete ToDo list UI
+  Create ToDo list UI
+  2026/05/03
+  Start chat plan
 ## Next Steps
 - Continue video
 -  2026/05/02 Goal
