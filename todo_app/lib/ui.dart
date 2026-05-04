@@ -26,45 +26,73 @@ class _UIState extends State<UI>{
             decoration: InputDecoration(
               labelText:'ToDo',
               hintText: 'example: study',
-            )
+            ),
+          //ここもいまいち
+            onSubmitted:(value){//ボタン押す
+              if(controller.text.trim().isEmpty)
+              {
+                return;
+              }
+            setState(()//画面更新
+              {
+                _todoLst.add(ToDo(controller.text, false));
+                controller.clear();
+              });
+              FocusScope.of(context).unfocus();
+            }
         ),
-        
-        ElevatedButton(
-          child: Text("追加"),//ここもいまいち
-          onPressed:(){
-           setState(()
-            {
-              _todoLst.add(ToDo(controller.text, false));
-            });
-          }
-          
-        ),
-
-        //controller: controller,
+        //チェックボックス
         Expanded(
           child: ListView.builder(
-            itemCount: _todoLst.length,
-            itemBuilder: (context, index){
-              return CheckboxListTile(
-                onChanged: (value) {
+            itemCount: _todoLst.length,//リストの数だけUI作る
+            itemBuilder: (context, index){//1個ずつ作る関数
+              return Dismissible(
+                key: UniqueKey(),
+                onDismissed: (direction){//スワイプする方向（右→左）
                   setState((){
-                    _todoLst[index].checked = value!;
+                    _todoLst.removeAt(index);
                   });
                 },
+                child:ListTile(//UI
+                leading: Checkbox(
                 value: _todoLst[index].getCheck(),//なんで？
-                title:Text(_todoLst[index].getText()),
+                onChanged: (value) {//チェック変更
+                  setState((){
+                    _todoLst[index].checked = value!;
+                    
+                     //順番入れ替え
+                     _todoLst.sort((a, b){//ここ問題あり
+                      if(a.checked == b.checked) return 0;
+                      if(a.checked) return 1;
+                      return -1;
+                     });
+                  });
+                },
+                ),
+                title:Text(
+                  _todoLst[index].getText(),
+                  style: TextStyle(
+                    color: _todoLst[index].checked ? Colors.grey : Colors.black,
+                    decoration: _todoLst[index].getCheck()
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none,
+                  )
+                ), 
+                trailing: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      setState((){
+                        _todoLst.removeAt(index);
+                    });
+                  },
+                ),
+              )
               );
             }
           )
         )
-
         ]
-        )
+      )
     );
-    //controller.textでユーザーインプットが取れる！
-    //
-    
-    
-
   }
 }
