@@ -36,11 +36,11 @@ Learned about Radio/Checkbox and ProgressIndicator
   Create ToDo list UI
   2026/05/03
   Start chat plan
+  2026/05/04
+  Complete chat UI undone
 ## Next Steps
 - Continue video
-- 2026/05/04 Goal
-  Complete chat UI
--2026/05/04 Goal
+-2026/05/05 Goal
    Check what is API
 - finish todo app
 
