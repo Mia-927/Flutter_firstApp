@@ -38,7 +38,9 @@ Learned about Radio/Checkbox and ProgressIndicator
   Start chat plan
 ## Next Steps
 - Continue video
--  2026/05/04 Goal
+- 2026/05/04 Goal
   Complete chat UI
+-2026/05/04 Goal
+   Check what is API
 - finish todo app
 
