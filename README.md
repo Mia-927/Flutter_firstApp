@@ -42,7 +42,7 @@ Learned about Radio/Checkbox and ProgressIndicator
   Learn API
 ## Next Steps
 - Continue video
--2026/05/05 Goal
-   Check what is API
+-2026/05/06 Goal
+   ui finished
 - finish todo app
 
