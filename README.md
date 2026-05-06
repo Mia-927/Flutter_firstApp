@@ -38,6 +38,8 @@ Learned about Radio/Checkbox and ProgressIndicator
   Start chat plan
   2026/05/04
   Complete chat UI undone
+  05
+  Learn API
 ## Next Steps
 - Continue video
 -2026/05/05 Goal
