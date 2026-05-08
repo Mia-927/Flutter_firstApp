@@ -42,7 +42,9 @@ Learned about Radio/Checkbox and ProgressIndicator
   Learn API
   06
   try another way to plan
-  downloading notion 
+  downloading notion
+  07
+  rethink ways to plan and just do google calender
 ## Next Steps
 - Continue video
 -2026/05/06 Goal
