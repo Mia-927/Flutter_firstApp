@@ -40,6 +40,9 @@ Learned about Radio/Checkbox and ProgressIndicator
   Complete chat UI undone
   05
   Learn API
+  06
+  try another way to plan
+  downloading notion 
 ## Next Steps
 - Continue video
 -2026/05/06 Goal
