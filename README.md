@@ -45,6 +45,8 @@ Learned about Radio/Checkbox and ProgressIndicator
   downloading notion
   07
   rethink ways to plan and just do google calender
+  08
+  able to use an emulater to a physical phone
 ## Next Steps
 - Continue video
 -2026/05/06 Goal
