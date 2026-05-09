@@ -49,7 +49,7 @@ Learned about Radio/Checkbox and ProgressIndicator
   able to use an emulater to a physical phone
 ## Next Steps
 - Continue video
--2026/05/06 Goal
+-2026/05/09 Goal
    ui finished
 - finish todo app
 
