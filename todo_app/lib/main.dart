@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 //
 //import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'ui.dart';
+import 'chat.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: UI(),
+      home: Chat(),
     );
   }
 }
