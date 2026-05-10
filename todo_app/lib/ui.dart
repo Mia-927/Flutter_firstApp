@@ -18,7 +18,7 @@ class _UIState extends State<UI>{
 
   Widget build(BuildContext context){
     return Scaffold(
-      appBar: AppBar(title: Text("ToDo")),
+      appBar: AppBar(backgroundColor: const Color.fromARGB(255, 192, 129, 237), title: Text("ToDo")),
       body: Column(
         children: [
           TextField(
