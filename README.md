@@ -38,15 +38,17 @@ Learned about Radio/Checkbox and ProgressIndicator
   Start chat plan
   2026/05/04
   Complete chat UI undone
-  05
+  2026/05/05
   Learn API
-  06
+  2026/05/06
   try another way to plan
   downloading notion
-  07
+  2026/05/07
   rethink ways to plan and just do google calender
-  08
+  2026/05/08
   able to use an emulater to a physical phone
+  2026/05/09
+  Completed the UI
 ## Next Steps
 - Continue video
 -2026/05/09 Goal
