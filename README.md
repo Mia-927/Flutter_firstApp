@@ -30,28 +30,28 @@ Learned about Radio/Checkbox and ProgressIndicator
   Learned about JSON and Font
 - 2026/04/30
   Start creating a todo app
-   2026/05/01 Goal
+-  2026/05/01 Goal
   Create and complete ToDo list datafile
-   2026/05/02
+-  2026/05/02
   Create ToDo list UI
-  2026/05/03
+- 2026/05/03
   Start chat plan
-  2026/05/04
+- 2026/05/04
   Complete chat UI undone
-  2026/05/05
+- 2026/05/05
   Learn API
-  2026/05/06
+- 2026/05/06
   try another way to plan
   downloading notion
-  2026/05/07
+- 2026/05/07
   rethink ways to plan and just do google calender
-  2026/05/08
+- 2026/05/08
   able to use an emulater to a physical phone
-  2026/05/09
-  Completed the UI
+- 2026/05/09
+  Completed the chatt UI
 ## Next Steps
 - Continue video
--2026/05/09 Goal
-   ui finished
+-2026/05/10 Goal
+   compleate easy algorisim
 - finish todo app
 
