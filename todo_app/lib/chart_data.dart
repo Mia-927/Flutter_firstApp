@@ -3,7 +3,14 @@ class ChatText{
   final bool isAI;
 
   ChatText({required this.text, required this.isAI});
+}
 
-  getTxt()
-  {return text;}
+class ChatData{
+  final String title;
+  final List<ChatText> messages;
+
+  ChatData({
+    required this.title,
+    required this.messages,
+  });
 }

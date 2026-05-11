@@ -19,52 +19,70 @@ class _ChatState extends State<Chat>{
   final controller = TextEditingController();
   List<ChatText> messages = [];
   final scrollController = ScrollController();
+  List<ChatData> chats = [];
+  int chatIndex = 0;
 
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: const Color.fromARGB(255, 164, 188, 229),
         title: const Text("チャット画面", style: TextStyle(color: Color.fromARGB(255, 252, 239, 250)))),
+      
       body: Container( 
         width: double.infinity,
         height: double.infinity,
-        color: const Color.fromARGB(255, 216, 234, 246),
+        color: const Color.fromARGB(255, 230, 243, 252),
         child: Column(//チャットボックス
           mainAxisAlignment: MainAxisAlignment.end,
           children:[
             Expanded(child: chatLst()),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
+                //入力画面
+                addButton(),
                 Expanded(child: chatInput()),
-                icon(),]
+              ]
             ),
           ]
         ) 
-      )
+      ),
     );
   }
 
-  //入力画面
+  //入力画面 //ここにiconも入ることになる。
   Widget chatInput(){
     return Container(
-              padding: const EdgeInsets.only(
-                        left: 8,
-                        right: 8,
-                        bottom: 50,
-              ),
-              child: TextField(
-                controller: controller,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: const Color.fromARGB(255, 255, 218, 255),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.blue,
-                    ),
-                  )//この色どうやって変えるんだ？ってかどうやってメインで呼べばいいのか分からん
-                )
-              ),
-              );
+      padding: const EdgeInsets.only(
+        left: 8,
+        right: 8,
+        bottom: 10,
+      ),
+      child: TextField(
+        controller: controller,
+
+        minLines: 1,//最小の入力行
+        maxLines: 4,
+
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: const Color.fromARGB(255, 255, 229, 255),
+          hintText: "今日は何する？",
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 12,
+            horizontal: 12,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: BorderSide(
+              color: const Color.fromARGB(255, 33, 222, 243),
+            ),
+          ),
+          
+          suffixIcon: icon(),//送信ボタンの埋め込み
+        ),
+      ),
+    );
   }
   //チャットリスト
   Widget chatLst(){
@@ -93,28 +111,42 @@ class _ChatState extends State<Chat>{
             child: Text(message.text, //ここにmessage入れる！
               style: TextStyle(color: const Color.fromARGB(255, 0, 24, 52),),
             ), 
-   
-            ),
+          ),
         );
       }
     ).toList(),);
   }
-
-  //Icon
-  icon(){
+  //Icon送信ボタン AIとかもここ
+  Widget icon(){
     return// ButtonNavigationBarItem()
       IconButton( 
         icon: const Icon(Icons.send),
         onPressed: () {
           setState(() {
-            messages.add(ChatText(text: controller.text, isAI: false));//messageリストに追加！！
+            /*chats.add(
+              ChatData(
+                title:"New チャット",
+                messages: [],
+                ),
+            );*/
+            chatIndex = chats.length - 1;
+            messages.add(//messageリストに追加！！
+              ChatText(
+                text: controller.text, 
+                isAI: false
+            ));
 
             //AI返信枠
             final replies = ["いいね", "なるほど", "わかる", "それいい"];
             final ai = replies[DateTime.now().millisecond % replies.length];
             
-            messages.add(ChatText(text: "AI: $ai", isAI: true));//AI側だぜ！
-            });
+            //chats[chatIndex].messages.add(ChatText(text: "AI: $ai", isAI: true));//AI側だぜ！
+            messages.add(//messageリストに追加！！
+              ChatText(
+                text: "AI: ${controller.text}", 
+                isAI: true,
+            ));
+        });
             controller.clear();//内容消去
             
         Future.delayed(const Duration(milliseconds: 50),(){
@@ -123,6 +155,30 @@ class _ChatState extends State<Chat>{
           );
         });},
     );
+  }
+  
+  //+マーク
+  Widget addButton(){
+    return TextButton(//+マーク
+    
+      onPressed: (){
+        showModalBottomSheet(//ボタン押したら実行
+          context: context,
+          builder:(context){
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                ListTile(title: Text("新テーマ！")),
+                ListTile(title: Text("新チャット！")),
+                ListTile(title: Text("次の日！")),
+              ],
+            );
+          },
+        );
+      },
+        child: Icon(Icons.add),
+      );
   }
 }
 //
