@@ -17,11 +17,10 @@ class Chat extends StatefulWidget{
 
 class _ChatState extends State<Chat>{
   final controller = TextEditingController();
-  List<ChatText> messages = [];
   final scrollController = ScrollController();
   List<ChatData> chats = [];
   int chatIndex = 0;
-
+  @override
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
@@ -86,9 +85,12 @@ class _ChatState extends State<Chat>{
   }
   //チャットリスト
   Widget chatLst(){
+    if(chats.isEmpty){
+      return Center(child: Text("New Chat"));
+    }
     return ListView(
       controller: scrollController,
-      children: messages.map((message){
+      children: chats[chatIndex].messages.map((message){
         return Align(//マップの中のリターン
           alignment: message.isAI
           ?Alignment.centerLeft
@@ -122,15 +124,16 @@ class _ChatState extends State<Chat>{
       IconButton( 
         icon: const Icon(Icons.send),
         onPressed: () {
+          if(chats.isEmpty){
+            chats.add(ChatData(
+              title: "New Chat",
+              messages: [],
+            ),);
+            chatIndex = 0;
+          }
           setState(() {
-            /*chats.add(
-              ChatData(
-                title:"New チャット",
-                messages: [],
-                ),
-            );*/
-            chatIndex = chats.length - 1;
-            messages.add(//messageリストに追加！！
+            //ユーザー
+            chats[chatIndex].messages.add(//messageリストに追加！！
               ChatText(
                 text: controller.text, 
                 isAI: false
@@ -140,12 +143,13 @@ class _ChatState extends State<Chat>{
             final replies = ["いいね", "なるほど", "わかる", "それいい"];
             final ai = replies[DateTime.now().millisecond % replies.length];
             
-            //chats[chatIndex].messages.add(ChatText(text: "AI: $ai", isAI: true));//AI側だぜ！
-            messages.add(//messageリストに追加！！
+            chats[chatIndex].messages.add(
+              ChatText(text: "AI: $ai", isAI: true));//AI側だぜ！
+            /*messages.add(//messageリストに追加！！
               ChatText(
-                text: "AI: ${controller.text}", 
+                text: "AI: $ai", 
                 isAI: true,
-            ));
+            ));*/
         });
             controller.clear();//内容消去
             
@@ -169,8 +173,18 @@ class _ChatState extends State<Chat>{
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                ListTile(title: Text("新テーマ！")),
-                ListTile(title: Text("新チャット！")),
+                ListTile(title: Text("新テーマ！")),//それぞれ画面にPopで文字出すけど保存は同じ
+                ListTile(title: const Text("新チャット！"),
+                  onTap: (){
+                    setState((){
+                      chats.add(ChatData(
+                        title: "New Chat",
+                        messages: [],
+                      ),);
+                      chatIndex = chats.length - 1;
+                    });
+                    Navigator.pop(context);
+                  }),
                 ListTile(title: Text("次の日！")),
               ],
             );
