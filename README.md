@@ -53,7 +53,9 @@ Learned about Radio/Checkbox and ProgressIndicator
    created Button Navagation Bar Item to switch screen
 ## Next Steps
 - Continue video
--2026/05/10 Goal
+-2026/05/11 Goal
+   compleate log
+  2026/05/10 Goal
    compleate easy algorisim
 - finish todo app
 
