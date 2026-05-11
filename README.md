@@ -58,5 +58,7 @@ Learned about Radio/Checkbox and ProgressIndicator
   2026/05/12 Goal
    combine the app to the main branch for github
   
+  2026/05/13 Goal
+   able to create a new chat
 - finish todo app
 
