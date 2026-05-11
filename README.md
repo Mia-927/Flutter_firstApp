@@ -55,7 +55,7 @@ Learned about Radio/Checkbox and ProgressIndicator
 - Continue video
 -2026/05/11 Goal
    compleate log
-  2026/05/10 Goal
-   compleate easy algorisim
+  2026/05/12 Goal
+   combine the app to the main branch for github
 - finish todo app
 
