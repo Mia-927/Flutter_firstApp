@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 //import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'chat.dart';
 import 'todo.dart';
+import 'log.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -31,6 +32,7 @@ class _MainScreen extends State<MainScreen>{
     //home(仮)
     const Center(child: Text("Home"),),
     ToDoUI(),
+    Log(),
   ];
 
   @override
@@ -39,6 +41,9 @@ class _MainScreen extends State<MainScreen>{
       body: _pages[index],
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: index,
+          selectedItemColor: Colors.purple,
+          unselectedItemColor: const Color.fromARGB(255, 213, 212, 212),
+          backgroundColor: Colors.blue,
           onTap:(currentIndex){
             setState((){
               index = currentIndex;
@@ -48,9 +53,12 @@ class _MainScreen extends State<MainScreen>{
             BottomNavigationBarItem(icon: Icon(Icons.chat_bubble), label:'Chat'),
             BottomNavigationBarItem(icon: Icon(Icons.home), label:'Home'),
             BottomNavigationBarItem(icon: Icon(Icons.check_box), label:'ToDo'),
+            BottomNavigationBarItem(icon: Icon(Icons.sort), label:'Log'),
           ]
         ),
-      );
+      
+      
+    );
   }
   
 }
