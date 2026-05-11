@@ -51,11 +51,12 @@ Learned about Radio/Checkbox and ProgressIndicator
   Completed the chat UI
   -2026/05/10 
    created Button Navagation Bar Item to switch screen
+  -2026/05/11
+   complete log
 ## Next Steps
 - Continue video
--2026/05/11 Goal
-   compleate log
   2026/05/12 Goal
    combine the app to the main branch for github
+  
 - finish todo app
 
