@@ -100,7 +100,7 @@ class _ChatState extends State<Chat>{
             Container(
               padding: const EdgeInsets.symmetric(
                 vertical: 4,
-                horizontal: 8,
+                horizontal: 6,
               ),
               margin: const EdgeInsets.all(4),
               decoration: BoxDecoration(
