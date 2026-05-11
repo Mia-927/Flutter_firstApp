@@ -48,7 +48,9 @@ Learned about Radio/Checkbox and ProgressIndicator
 - 2026/05/08
   able to use an emulater to a physical phone
 - 2026/05/09
-  Completed the chatt UI
+  Completed the chat UI
+  -2026/05/10 
+   created Button Navagation Bar Item to switch screen
 ## Next Steps
 - Continue video
 -2026/05/10 Goal
