@@ -5,15 +5,19 @@ import '../data/todo_data.dart';
   タスク編集*/
 
 class ToDoUI extends StatefulWidget {
-  const ToDoUI({super.key});
+  const ToDoUI({
+    super.key,
+    required this.todos,
+  });
+  final List<ToDoData> todos;
   
   @override
   State<ToDoUI> createState() => _UIState();
 }
 class _UIState extends State<ToDoUI>{
   @override
-  List<ToDo> _todoLst = [];//ここ分からんどっかで入力したい
   final controller = TextEditingController();
+  List<ToDoData> _todoLst = [];
 
   Widget build(BuildContext context){
     return Scaffold(
@@ -36,7 +40,7 @@ class _UIState extends State<ToDoUI>{
               }
             setState(()//画面更新
               {
-                _todoLst.add(ToDo(controller.text, false));
+                _todoLst.add(ToDoData(text: controller.text, checked: false));
                 controller.clear();
               });
             FocusScope.of(context).unfocus();

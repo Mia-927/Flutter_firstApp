@@ -8,17 +8,23 @@ import '../data/chat_data.dart';
 
 　終わったら、ログ、時計とか？
 */
-class Chat extends StatefulWidget{
-  const Chat({super.key});
+class ChatUI extends StatefulWidget{
+  const ChatUI({
+    super.key,
+    required this.chats,
+  });
 
+  final List<ChatData> chats;
+  
   @override
-  State<Chat> createState() => _ChatState();
+  State<ChatUI> createState() => _ChatState();
 }
 
-class _ChatState extends State<Chat>{
+class _ChatState extends State<ChatUI>{
   final controller = TextEditingController();
   final scrollController = ScrollController();
   int chatIndex = 0;
+  
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -84,12 +90,12 @@ class _ChatState extends State<Chat>{
   }
   //チャットリスト
   Widget chatLst(){
-    if(chats.isEmpty){
+    if(widget.chats.isEmpty){
       return Center(child: Text("New Chat"));
     }
     return ListView(
       controller: scrollController,
-      children: chats[chatIndex].messages.map((message){
+      children: widget.chats[chatIndex].messages.map((message){
         return Align(//マップの中のリターン
           alignment: message.isAI
           ?Alignment.centerLeft
@@ -123,8 +129,8 @@ class _ChatState extends State<Chat>{
       IconButton( 
         icon: const Icon(Icons.send),
         onPressed: () {
-          if(chats.isEmpty){
-            chats.add(ChatData(
+          if(widget.chats.isEmpty){
+            widget.chats.add(ChatData(
               title: "New Chat",
               messages: [],
             ),);
@@ -132,7 +138,7 @@ class _ChatState extends State<Chat>{
           }
           setState(() {
             //ユーザー
-            chats[chatIndex].messages.add(//messageリストに追加！！
+            widget.chats[chatIndex].messages.add(//messageリストに追加！！
               ChatText(
                 text: controller.text, 
                 isAI: false
@@ -142,7 +148,7 @@ class _ChatState extends State<Chat>{
             final replies = ["いいね", "なるほど", "わかる", "それいい"];
             final ai = replies[DateTime.now().millisecond % replies.length];
             
-            chats[chatIndex].messages.add(
+            widget.chats[chatIndex].messages.add(
               ChatText(text: "AI: $ai", isAI: true));//AI側だぜ！
             /*messages.add(//messageリストに追加！！
               ChatText(
@@ -175,11 +181,11 @@ class _ChatState extends State<Chat>{
                 ListTile(title: const Text("新チャット！"),
                   onTap: (){
                     setState((){
-                      chats.add(ChatData(
+                      widget.chats.add(ChatData(
                         title: "New Chat",
                         messages: [],
                       ),);
-                      chatIndex = chats.length - 1;
+                      chatIndex = widget.chats.length - 1;
                     });
                     Navigator.pop(context);
                   }),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-//
-//import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'ui/chat.dart';
 import 'ui/todo.dart';
 import 'ui/log.dart';
+import 'data/todo_data.dart';
 import 'data/chat_data.dart';
+import 'data/log_data.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -29,19 +29,24 @@ class MainScreen extends StatefulWidget{
 class _MainScreen extends State<MainScreen>{
 
   int index = 1;
-  List<ChatData> chats = [];
-  Map<String, List<LogData>> allLogs = {};
-  final List<Widget> _pages = [
-    Chat(chats: chats),
-    //home(仮)
-    const Center(child: Text("Home"),),
-    ToDoUI(),
-    Log(),
-  ];
+  final List<ChatData> chats = [];
+  final List<ToDoData> todos = [];
+  final Map<String, List<LogData>> logs = {};
+  
 
   @override
   Widget build(BuildContext context){
-    return Scaffold(
+  final List<Widget> _pages = [
+    ChatUI(chats: chats),
+    const Center(child: Text("Home"),),//home(仮)
+    ToDoUI(todos: todos),
+    LogUI(
+      chats: chats,
+      todos: todos,
+      logs: logs,
+      ),
+  ];
+  return Scaffold(
       body: _pages[index],
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: index,

@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
+import '../data/chat_data.dart';
+import '../data/todo_data.dart';
+import '../data/log_data.dart';
 
-class Log extends StatefulWidget{
-  const Log({super.key});
+class LogUI extends StatefulWidget{
+  const LogUI({super.key,
+    required this.chats,
+    required this.todos,
+    required this.logs,
+    //required this.dates,
+  });
+  final List<ChatData> chats;
+  final List<ToDoData> todos;
+  final Map<String, List<LogData>> logs;
+  //final List<String> dates;
   @override
-  State<Log> createState() => _LogState();
+  State<LogUI> createState() => _LogState();
 }
 
-class _LogState extends State<Log>{
+class _LogState extends State<LogUI>{
   String selectedDate = "今日";
 
   @override
