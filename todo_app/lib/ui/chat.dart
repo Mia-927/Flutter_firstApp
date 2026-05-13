@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'chart_data.dart';
+import '../data/chat_data.dart';
 /*チャット画面を作ろう！！
 　１．色を変える
 　２．ボタン追加
@@ -18,7 +18,6 @@ class Chat extends StatefulWidget{
 class _ChatState extends State<Chat>{
   final controller = TextEditingController();
   final scrollController = ScrollController();
-  List<ChatData> chats = [];
   int chatIndex = 0;
   @override
   Widget build(BuildContext context){
@@ -160,7 +159,6 @@ class _ChatState extends State<Chat>{
         });},
     );
   }
-  
   //+マーク
   Widget addButton(){
     return TextButton(//+マーク
@@ -195,4 +193,3 @@ class _ChatState extends State<Chat>{
       );
   }
 }
-//

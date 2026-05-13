@@ -4,8 +4,7 @@ class LogData{
   final String title;
   final String content;
   final String type;
-  //final String DateTeime date;
-  Map<String, List<LogData>> allLogs = {};
+  //final String DateTime date;
 
   LogData({
     required this.title,

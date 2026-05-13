@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 //
 //import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'chat.dart';
-import 'todo.dart';
-import 'log.dart';
+import 'ui/chat.dart';
+import 'ui/todo.dart';
+import 'ui/log.dart';
+import 'data/chat_data.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 class MainScreen extends StatefulWidget{
   const MainScreen({super.key});
   @override
@@ -27,8 +29,10 @@ class MainScreen extends StatefulWidget{
 class _MainScreen extends State<MainScreen>{
 
   int index = 1;
+  List<ChatData> chats = [];
+  Map<String, List<LogData>> allLogs = {};
   final List<Widget> _pages = [
-    Chat(),
+    Chat(chats: chats),
     //home(仮)
     const Center(child: Text("Home"),),
     ToDoUI(),
