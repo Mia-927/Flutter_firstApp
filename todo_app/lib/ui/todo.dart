@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import '../data/todo_data.dart';
+import 'package:todo_app/appStorage.dart';
+import 'package:todo_app/data/todo_data.dart';
  /*完了チェック（チェックボックス）
   完了したら見た目変える（取り消し線とか）
   タスク編集*/
 
 class ToDoUI extends StatefulWidget {
-  const ToDoUI({
-    super.key,
-    required this.todos,
-  });
-  final List<ToDoData> todos;
+  const ToDoUI({super.key, required this.appStorage});
+  final AppStorage appStorage;
   
   @override
   State<ToDoUI> createState() => _UIState();

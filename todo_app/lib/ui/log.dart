@@ -1,18 +1,9 @@
 import 'package:flutter/material.dart';
-import '../data/chat_data.dart';
-import '../data/todo_data.dart';
-import '../data/log_data.dart';
+import 'package:todo_app/appStorage.dart';
 
 class LogUI extends StatefulWidget{
-  const LogUI({super.key,
-    required this.chats,
-    required this.todos,
-    required this.logs,
-    //required this.dates,
-  });
-  final List<ChatData> chats;
-  final List<ToDoData> todos;
-  final Map<String, List<LogData>> logs;
+  const LogUI({super.key, required this.appStorage});
+  final AppStorage appStorage;
   //final List<String> dates;
   @override
   State<LogUI> createState() => _LogState();

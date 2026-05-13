@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'ui/chat.dart';
 import 'ui/todo.dart';
 import 'ui/log.dart';
-import 'data/todo_data.dart';
-import 'data/chat_data.dart';
-import 'data/log_data.dart';
+import 'appStorage.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -20,44 +18,32 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 class MainScreen extends StatefulWidget{
   const MainScreen({super.key});
   @override
   State<MainScreen> createState() => _MainScreen();
 }
-class _MainScreen extends State<MainScreen>{
 
+class _MainScreen extends State<MainScreen>{
+  final appStorage = AppStorage();
   int index = 1;
-  final List<ChatData> chats = [];
-  final List<ToDoData> todos = [];
-  final Map<String, List<LogData>> logs = {};
-  
 
   @override
   Widget build(BuildContext context){
-  final List<Widget> _pages = [
-    ChatUI(chats: chats),
+  final List<Widget> pages = [
+    ChatUI(appStorage: appStorage),
     const Center(child: Text("Home"),),//home(仮)
-    ToDoUI(todos: todos),
-    LogUI(
-      chats: chats,
-      todos: todos,
-      logs: logs,
-      ),
+    ToDoUI(appStorage: appStorage),
+    LogUI(appStorage: appStorage),
   ];
   return Scaffold(
-      body: _pages[index],
+      body: pages[index],
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: index,
           selectedItemColor: Colors.purple,
           unselectedItemColor: const Color.fromARGB(255, 213, 212, 212),
           backgroundColor: Colors.blue,
-          onTap:(currentIndex){
-            setState((){
-              index = currentIndex;
-            });
-          },
+          onTap:(currentIndex) => setState(() => index = currentIndex),
           items:[
             BottomNavigationBarItem(icon: Icon(Icons.chat_bubble), label:'Chat'),
             BottomNavigationBarItem(icon: Icon(Icons.home), label:'Home'),
