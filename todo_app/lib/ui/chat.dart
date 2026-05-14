@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../data/chat_data.dart';
+import '../data/log_data.dart';
 import 'package:todo_app/appStorage.dart';
 /*チャット画面を作ろう！！
 　１．色を変える
@@ -141,6 +142,15 @@ class _ChatState extends State<ChatUI>{
                 isAI: false
             ));
 
+            //ログ追加
+            final today = DateTime.now().toString().split(" ")[0];
+            if(widget.appStorage.logs[today] == null){
+              widget.appStorage.logs[today] = [];
+            }
+            widget.appStorage.logs[today]!.add(
+              LogData(title: controller.text, content: "temp",type: "Chat")
+              );
+           
             //AI返信枠
             final replies = ["いいね", "なるほど", "わかる", "それいい"];
             final ai = replies[DateTime.now().millisecond % replies.length];

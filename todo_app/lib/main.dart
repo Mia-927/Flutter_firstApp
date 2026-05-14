@@ -36,6 +36,7 @@ class _MainScreen extends State<MainScreen>{
     ToDoUI(appStorage: appStorage),
     LogUI(appStorage: appStorage),
   ];
+  
   return Scaffold(
       body: pages[index],
       bottomNavigationBar: BottomNavigationBar(
