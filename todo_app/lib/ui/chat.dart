@@ -91,9 +91,11 @@ class _ChatState extends State<ChatUI>{
     if(widget.appStorage.chats.isEmpty){
       return Center(child: Text("New Chat"));
     }
-    return ListView(
+    return ListView.builder(
+      itemCount: widget.appStorage.chats[chatIndex].messages.length,
       controller: scrollController,
-      children: widget.appStorage.chats[chatIndex].messages.map((message){
+      itemBuilder: (context, index){
+        final message = widget.appStorage.chats[chatIndex].messages[index];
         return Align(//マップの中のリターン
           alignment: message.isAI
           ?Alignment.centerLeft
@@ -119,7 +121,7 @@ class _ChatState extends State<ChatUI>{
           ),
         );
       }
-    ).toList(),);
+    );
   }
   //Icon送信ボタン AIとかもここ
   Widget icon(){
@@ -166,10 +168,14 @@ class _ChatState extends State<ChatUI>{
             controller.clear();//内容消去
             
         Future.delayed(const Duration(milliseconds: 50),(){
-          scrollController.jumpTo(
-            scrollController.position.maxScrollExtent,
-          );
-        });},
+          WidgetsBinding.instance.addPostFrameCallback((_){
+            if(scrollController.hasClients){
+              scrollController.jumpTo(scrollController.position.maxScrollExtent);
+            }
+        });
+        }
+        
+        );},
     );
   }
   //+マーク

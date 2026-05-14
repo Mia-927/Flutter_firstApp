@@ -14,6 +14,8 @@ class _LogState extends State<LogUI>{
 
   @override
   Widget build(BuildContext context){
+  final today = DateTime.now().toString().split(" ")[0];
+  final logs = widget.appStorage.logs[today] ?? [];
     return Scaffold(
       appBar: AppBar(
         title: const Text("ログ"),
@@ -35,21 +37,19 @@ class _LogState extends State<LogUI>{
           ],
         ),
       ),
-      body: ListView(
-        children: const[
-          ListTile(
+      body: ListView.builder(
+        itemCount: logs.length,
+        itemBuilder:(context, index){
+          if(logs.isEmpty){
+            return Center(child: Text("ログなし"));
+          }
+          final log = logs[index];
+          return ListTile(
             leading: Icon(Icons.book),
-            title: Text("勉強ログ"),
-          ),
-          ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text("感情ログ"),
-          ),
-          ListTile(
-            leading: Icon(Icons.check),
-            title: Text("Todoログ"),
-          ),
-        ]
+            title: Text(log.title),
+            subtitle: Text(log.content),
+          );
+        }
       ),
     );
   }

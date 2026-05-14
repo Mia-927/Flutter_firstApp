@@ -6,10 +6,12 @@ class ChatText{
 }
 
 class ChatData{
+  final String date;
   final String title;
   final List<ChatText> messages;
 
   ChatData({
+    required this.date,
     required this.title,
     required this.messages,
   });

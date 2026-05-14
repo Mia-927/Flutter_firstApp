@@ -15,7 +15,6 @@ class ToDoUI extends StatefulWidget {
 class _UIState extends State<ToDoUI>{
   @override
   final controller = TextEditingController();
-  List<ToDoData> _todoLst = [];
 
   Widget build(BuildContext context){
     return Scaffold(
@@ -38,7 +37,7 @@ class _UIState extends State<ToDoUI>{
               }
             setState(()//画面更新
               {
-                _todoLst.add(ToDoData(text: controller.text, checked: false));
+                widget.appStorage.todos.add(ToDoData(text: controller.text, checked: false));
                 controller.clear();
               });
             FocusScope.of(context).unfocus();
@@ -47,24 +46,24 @@ class _UIState extends State<ToDoUI>{
         //チェックボックス
           Expanded(
             child: ListView.builder(
-              itemCount: _todoLst.length,//リストの数だけUI作る
+              itemCount: widget.appStorage.todos.length,//リストの数だけUI作る
               itemBuilder: (context, index){//1個ずつ作る関数
                 return Dismissible(
                   key: UniqueKey(),
                   onDismissed: (direction){//スワイプする方向（右→左）
                     setState((){
-                      _todoLst.removeAt(index);
+                      widget.appStorage.todos.removeAt(index);
                     });
                   },
                 child:ListTile(//UI
                 leading: Checkbox(
-                value: _todoLst[index].checked,//なんで？
+                value: widget.appStorage.todos[index].checked,//なんで？
                 onChanged: (value) {//チェック変更
                   setState((){
-                    _todoLst[index].checked = value!;
+                    widget.appStorage.todos[index].checked = value!;
                     
                      //順番入れ替え
-                     _todoLst.sort((a, b){//ここ問題あり
+                     widget.appStorage.todos.sort((a, b){//ここ問題あり
                       if(a.checked == b.checked) return 0;
                       if(a.checked) return 1;
                       return -1;
@@ -73,10 +72,10 @@ class _UIState extends State<ToDoUI>{
                 },
                 ),
                 title:Text(
-                  _todoLst[index].text,
+                  widget.appStorage.todos[index].text,
                   style: TextStyle(
-                    color: _todoLst[index].checked ? Colors.grey : Colors.black,
-                    decoration: _todoLst[index].checked
+                    color: widget.appStorage.todos[index].checked ? Colors.grey : Colors.black,
+                    decoration: widget.appStorage.todos[index].checked
                     ? TextDecoration.lineThrough
                     : TextDecoration.none,
                   )
@@ -85,7 +84,7 @@ class _UIState extends State<ToDoUI>{
                     icon: Icon(Icons.delete),
                     onPressed: () {
                       setState((){
-                        _todoLst.removeAt(index);
+                        widget.appStorage.todos.removeAt(index);
                     });
                   },
                 ),
