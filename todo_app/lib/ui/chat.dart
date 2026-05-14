@@ -11,7 +11,7 @@ import 'package:todo_app/appStorage.dart';
 　終わったら、ログ、時計とか？
 */
 class ChatUI extends StatefulWidget{
-  const ChatUI({super.key, required this.appStorage});
+  ChatUI({super.key, required this.appStorage});
   final AppStorage appStorage;
   
   @override
@@ -22,6 +22,7 @@ class _ChatState extends State<ChatUI>{
   final controller = TextEditingController();
   final scrollController = ScrollController();
   int chatIndex = 0;
+  final today = DateTime.now().toString().split(" ")[0];
   
   @override
   Widget build(BuildContext context){
@@ -125,12 +126,14 @@ class _ChatState extends State<ChatUI>{
   }
   //Icon送信ボタン AIとかもここ
   Widget icon(){
+    final today = DateTime.now().toString().split(" ")[0];
     return// ButtonNavigationBarItem()
       IconButton( 
         icon: const Icon(Icons.send),
         onPressed: () {
           if(widget.appStorage.chats.isEmpty){
             widget.appStorage.chats.add(ChatData(
+              date: today,
               title: "New Chat",
               messages: [],
             ),);
@@ -145,12 +148,14 @@ class _ChatState extends State<ChatUI>{
             ));
 
             //ログ追加
-            final today = DateTime.now().toString().split(" ")[0];
             if(widget.appStorage.logs[today] == null){
               widget.appStorage.logs[today] = [];
             }
             widget.appStorage.logs[today]!.add(
-              LogData(title: controller.text, content: "temp",type: "Chat")
+              LogData(
+                date: today,
+                title: controller.text, 
+                content: "temp",type: "Chat")
               );
            
             //AI返信枠
@@ -195,6 +200,7 @@ class _ChatState extends State<ChatUI>{
                   onTap: (){
                     setState((){
                       widget.appStorage.chats.add(ChatData(
+                        date: today,
                         title: "New Chat",
                         messages: [],
                       ),);

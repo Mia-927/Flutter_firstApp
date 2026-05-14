@@ -15,6 +15,7 @@ class ToDoUI extends StatefulWidget {
 class _UIState extends State<ToDoUI>{
   @override
   final controller = TextEditingController();
+  final today = DateTime.now().toString().split(" ")[0];
 
   Widget build(BuildContext context){
     return Scaffold(
@@ -37,7 +38,7 @@ class _UIState extends State<ToDoUI>{
               }
             setState(()//画面更新
               {
-                widget.appStorage.todos.add(ToDoData(text: controller.text, checked: false));
+                widget.appStorage.todos.add(ToDoData(date: today,text: controller.text, checked: false));
                 controller.clear();
               });
             FocusScope.of(context).unfocus();
