@@ -18,84 +18,85 @@ class _UIState extends State<ToDoUI>{
   final today = DateTime.now().toString().split(" ")[0];
 
   Widget build(BuildContext context){
-    return Scaffold(
+    return Container(padding: EdgeInsets.all(8), child: Column(
+      children: [
+        TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            labelText:'ToDo',
+            hintText: 'example: study',
+          ),
+        //ここもいまいち
+          onSubmitted:(value){//ボタン押す
+            if(controller.text.trim().isEmpty)
+            {
+              return;
+            }
+          setState(()//画面更新
+            {
+              widget.appStorage.todos.add(ToDoData(date: today,text: controller.text, checked: false));
+              controller.clear();
+            });
+          FocusScope.of(context).unfocus();
+          }
+        ),
+      //チェックボックス
+        Expanded(
+          child: ListView.builder(
+            itemCount: widget.appStorage.todos.length,//リストの数だけUI作る
+            itemBuilder: (context, index){//1個ずつ作る関数
+              return Dismissible(
+                key: UniqueKey(),
+                onDismissed: (direction){//スワイプする方向（右→左）
+                  setState((){
+                    widget.appStorage.todos.removeAt(index);
+                  });
+                },
+              child:ListTile(//UI
+              leading: Checkbox(
+              value: widget.appStorage.todos[index].checked,//なんで？
+              onChanged: (value) {//チェック変更
+                setState((){
+                  widget.appStorage.todos[index].checked = value!;
+                  
+                    //順番入れ替え
+                    widget.appStorage.todos.sort((a, b){//ここ問題あり
+                    if(a.checked == b.checked) return 0;
+                    if(a.checked) return 1;
+                    return -1;
+                    });
+                });
+              },
+              ),
+              title:Text(
+                widget.appStorage.todos[index].text,
+                style: TextStyle(
+                  color: widget.appStorage.todos[index].checked ? Colors.grey : Colors.black,
+                  decoration: widget.appStorage.todos[index].checked
+                  ? TextDecoration.lineThrough
+                  : TextDecoration.none,
+                )
+              ), 
+              trailing: IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    setState((){
+                      widget.appStorage.todos.removeAt(index);
+                  });
+                },
+              ),
+            )
+            );
+          }
+        )
+      )
+      ]
+    )
+    );
+  }
+    /*Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 192, 129, 237), 
         title: Text("ToDo")),
-      body: Column(
-        children: [
-          TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              labelText:'ToDo',
-              hintText: 'example: study',
-            ),
-          //ここもいまいち
-            onSubmitted:(value){//ボタン押す
-              if(controller.text.trim().isEmpty)
-              {
-                return;
-              }
-            setState(()//画面更新
-              {
-                widget.appStorage.todos.add(ToDoData(date: today,text: controller.text, checked: false));
-                controller.clear();
-              });
-            FocusScope.of(context).unfocus();
-            }
-          ),
-        //チェックボックス
-          Expanded(
-            child: ListView.builder(
-              itemCount: widget.appStorage.todos.length,//リストの数だけUI作る
-              itemBuilder: (context, index){//1個ずつ作る関数
-                return Dismissible(
-                  key: UniqueKey(),
-                  onDismissed: (direction){//スワイプする方向（右→左）
-                    setState((){
-                      widget.appStorage.todos.removeAt(index);
-                    });
-                  },
-                child:ListTile(//UI
-                leading: Checkbox(
-                value: widget.appStorage.todos[index].checked,//なんで？
-                onChanged: (value) {//チェック変更
-                  setState((){
-                    widget.appStorage.todos[index].checked = value!;
-                    
-                     //順番入れ替え
-                     widget.appStorage.todos.sort((a, b){//ここ問題あり
-                      if(a.checked == b.checked) return 0;
-                      if(a.checked) return 1;
-                      return -1;
-                     });
-                  });
-                },
-                ),
-                title:Text(
-                  widget.appStorage.todos[index].text,
-                  style: TextStyle(
-                    color: widget.appStorage.todos[index].checked ? Colors.grey : Colors.black,
-                    decoration: widget.appStorage.todos[index].checked
-                    ? TextDecoration.lineThrough
-                    : TextDecoration.none,
-                  )
-                ), 
-                trailing: IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {
-                      setState((){
-                        widget.appStorage.todos.removeAt(index);
-                    });
-                  },
-                ),
-              )
-              );
-            }
-          )
-        )
-        ]
-      )
-    );
-  }
+      body: */  
 }

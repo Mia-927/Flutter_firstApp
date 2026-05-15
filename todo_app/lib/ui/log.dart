@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/appStorage.dart';
-
+import 'chat.dart';
+import 'todo.dart';
+enum SortMode{
+    date, theme, todo,
+  }
 class LogUI extends StatefulWidget{
   const LogUI({super.key, required this.appStorage});
   final AppStorage appStorage;
@@ -11,6 +15,7 @@ class LogUI extends StatefulWidget{
 
 class _LogState extends State<LogUI>{
   late String selectedDate;
+  
 
   @override
   Widget build(BuildContext context){
@@ -56,58 +61,12 @@ class _LogState extends State<LogUI>{
             )
         )
       ),
-      body: //右ToDo
-        Card(
-          margin: const EdgeInsets.all(12),
-          child: Column(
-            children:[
-              //Todo画面
-              const Padding(
-                padding: EdgeInsets.all(8),
-                child: Text(
-                  "ToDo",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,),
-                ),
-              ),
-              Expanded(child: ListView.builder(
-                itemCount: selectedToDos.length,
-                itemBuilder: (context, index){
-                  final todo = selectedToDos[index];
-                  return ListTile(
-                    leading: Checkbox(
-                      value: todo.checked,
-                      onChanged: null,
-                    ),
-                    title: Text(todo.text),
-                  );
-                }
-              )),
-            
-              const Divider(),
-              //Chat画面（ほぼToDoのコピペ）
-              const Padding(
-                padding: EdgeInsets.all(8),
-                child: Text(
-                  "Chat",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,),
-                ),
-              ),
-              Expanded(child: ListView.builder(
-                itemCount: selectedChats.length,
-                itemBuilder: (context, index){
-                  final chat = selectedChats[index];
-                  return ListTile(
-                    leading: const Icon(Icons.chat),
-                    title: Text(
-                      chat.messages.isNotEmpty? 
-                      chat.messages.first.text
-                      :"Empty Chat"),
-                  );
-                }
-              )),
-            
-            ])
-        ),
+      body: Stack(
+        children:[
+          ChatUI(appStorage: widget.appStorage,),
+          ToDoOverlay(),
+        ],
+      )
     );
   }
 
@@ -125,5 +84,24 @@ void initState(){
   }else{
     selectedDate = "";
   }
+}
+
+//ToDo FloatingWidget
+Widget ToDoOverlay(){
+  return Positioned(
+    right: 12,
+    top: 80,
+    child: Draggable(
+      feedback: Material(
+        child: Container(width: 200, height: 200, color: Colors.purple,),
+      ),
+      child: Container(
+        width: 200, height: 200, 
+        color: Colors.purpleAccent,
+        child: Center(
+          child: ToDoUI(appStorage: widget.appStorage,),
+        )),
+    ),
+  );
 }
 }

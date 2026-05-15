@@ -25,30 +25,24 @@ class _ChatState extends State<ChatUI>{
   
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 164, 188, 229),
-        title: const Text("チャット画面", style: TextStyle(color: Color.fromARGB(255, 252, 239, 250)))),
-      
-      body: Container( 
-        width: double.infinity,
-        height: double.infinity,
-        color: const Color.fromARGB(255, 230, 243, 252),
-        child: Column(//チャットボックス
-          mainAxisAlignment: MainAxisAlignment.end,
-          children:[
-            Expanded(child: chatLst()),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                //入力画面
-                addButton(),
-                Expanded(child: chatInput()),
-              ]
-            ),
-          ]
-        ) 
-      ),
+    return  Container( 
+      width: double.infinity,
+      height: double.infinity,
+      color: const Color.fromARGB(255, 230, 243, 252),
+      child: Column(//チャットボックス
+        mainAxisAlignment: MainAxisAlignment.end,
+        children:[
+          Expanded(child: chatLst()),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              //入力画面
+              addButton(),
+              Expanded(child: chatInput()),
+            ]
+          ),
+        ]
+      ) 
     );
   }
 
@@ -207,4 +201,8 @@ class _ChatState extends State<ChatUI>{
         child: Icon(Icons.add),
       );
   }
+//すべてを総合せし中身
+  /*Widget chatBody(){
+    return
+    }*/
 }
