@@ -58,7 +58,5 @@ Learned about Radio/Checkbox and ProgressIndicator
    temp finish log
 ## Next Steps
 - Continue video
-  2026/05/13 Goal
-   able to create a new chat
-- finish todo app
+- finish app
 
