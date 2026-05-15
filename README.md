@@ -56,6 +56,11 @@ Learned about Radio/Checkbox and ProgressIndicator
    combine the app to the main branch for github
   2026/05/12 
    temp finish log
+  2026/05/13 
+   separate UI  
+  2026/05/14 
+   delete and remade log
+  
 ## Next Steps
 - Continue video
 - finish app
