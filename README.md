@@ -64,6 +64,8 @@ Learned about Radio/Checkbox and ProgressIndicator
    complete log
   
 ## Next Steps
+  2026/05/16
+   delete navigation button 
 - Continue video
 - finish app
 
