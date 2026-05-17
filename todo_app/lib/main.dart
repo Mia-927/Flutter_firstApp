@@ -31,10 +31,9 @@ class _MainScreen extends State<MainScreen>{
   @override
   Widget build(BuildContext context){
   final List<Widget> pages = [
-    ChatUI(appStorage: appStorage),
-    const Center(child: Text("Home"),),//home(仮)
-    ToDoUI(appStorage: appStorage),
     LogUI(appStorage: appStorage),
+    const Center(child: Text("Home"),),//home(仮)
+    ToDoUI(appStorage: appStorage, selectedDate: "きょう？"),
   ];
   
   return Scaffold(
@@ -49,7 +48,6 @@ class _MainScreen extends State<MainScreen>{
             BottomNavigationBarItem(icon: Icon(Icons.chat_bubble), label:'Chat'),
             BottomNavigationBarItem(icon: Icon(Icons.home), label:'Home'),
             BottomNavigationBarItem(icon: Icon(Icons.check_box), label:'ToDo'),
-            BottomNavigationBarItem(icon: Icon(Icons.sort), label:'Log'),
           ]
         ),
       

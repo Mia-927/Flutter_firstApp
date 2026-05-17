@@ -15,7 +15,8 @@ class LogUI extends StatefulWidget{
 
 class _LogState extends State<LogUI>{
   late String selectedDate;
-  
+  double todoX = 12;
+  double todoY = 80;
 
   @override
   Widget build(BuildContext context){
@@ -24,7 +25,7 @@ class _LogState extends State<LogUI>{
     .map((chat) => chat.date).toSet().toList();
     final todoDates = widget.appStorage.todos
     .map((todo) => todo.date).toSet().toList();
-    final dates = {...chatDates, ...todoDates}.toList();
+    final dates = {...chatDates, ...todoDates}.toList()..sort();
     //右側のToDo
     final selectedToDos = widget.appStorage.todos
     .where((todo) => todo.date == selectedDate).toList();
@@ -89,18 +90,23 @@ void initState(){
 //ToDo FloatingWidget
 Widget ToDoOverlay(){
   return Positioned(
-    right: 12,
-    top: 80,
+    left: todoX,
+    top: todoY,
     child: Draggable(
       feedback: Material(
         child: Container(width: 200, height: 200, color: Colors.purple,),
       ),
       child: Container(
-        width: 200, height: 200, 
-        color: Colors.purpleAccent,
-        child: Center(
-          child: ToDoUI(appStorage: widget.appStorage,),
-        )),
+        width: 250, height: 300, 
+        color: const Color.fromARGB(255, 248, 205, 255).withValues(alpha: 0.8),
+        child: ToDoUI(appStorage: widget.appStorage, selectedDate: selectedDate),
+      ),
+      onDragEnd: (details){
+        setState((){
+          todoX = details.offset.dx;
+          todoY = details.offset.dy;
+        });
+      },
     ),
   );
 }

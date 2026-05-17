@@ -6,8 +6,9 @@ import 'package:todo_app/data/todo_data.dart';
   タスク編集*/
 
 class ToDoUI extends StatefulWidget {
-  const ToDoUI({super.key, required this.appStorage});
+  const ToDoUI({super.key, required this.appStorage, required this.selectedDate});
   final AppStorage appStorage;
+  final String selectedDate;
   
   @override
   State<ToDoUI> createState() => _UIState();
@@ -18,6 +19,9 @@ class _UIState extends State<ToDoUI>{
   final today = DateTime.now().toString().split(" ")[0];
 
   Widget build(BuildContext context){
+  final todos = widget.appStorage.todos
+    .where((todo) => todo.date == widget.selectedDate).toList();
+
     return Container(padding: EdgeInsets.all(8), child: Column(
       children: [
         TextField(
@@ -43,22 +47,21 @@ class _UIState extends State<ToDoUI>{
       //チェックボックス
         Expanded(
           child: ListView.builder(
-            itemCount: widget.appStorage.todos.length,//リストの数だけUI作る
+            itemCount: todos.length,//リストの数だけUI作る
             itemBuilder: (context, index){//1個ずつ作る関数
               return Dismissible(
                 key: UniqueKey(),
                 onDismissed: (direction){//スワイプする方向（右→左）
                   setState((){
-                    widget.appStorage.todos.removeAt(index);
+                    todos.removeAt(index);
                   });
                 },
               child:ListTile(//UI
               leading: Checkbox(
-              value: widget.appStorage.todos[index].checked,//なんで？
+              value: todos[index].checked,//なんで？
               onChanged: (value) {//チェック変更
                 setState((){
-                  widget.appStorage.todos[index].checked = value!;
-                  
+                  todos[index].checked = value!;
                     //順番入れ替え
                     widget.appStorage.todos.sort((a, b){//ここ問題あり
                     if(a.checked == b.checked) return 0;
@@ -69,10 +72,10 @@ class _UIState extends State<ToDoUI>{
               },
               ),
               title:Text(
-                widget.appStorage.todos[index].text,
+                todos[index].text,
                 style: TextStyle(
-                  color: widget.appStorage.todos[index].checked ? Colors.grey : Colors.black,
-                  decoration: widget.appStorage.todos[index].checked
+                  color: todos[index].checked ? Colors.grey : Colors.black,
+                  decoration: todos[index].checked
                   ? TextDecoration.lineThrough
                   : TextDecoration.none,
                 )
@@ -81,7 +84,7 @@ class _UIState extends State<ToDoUI>{
                   icon: Icon(Icons.delete),
                   onPressed: () {
                     setState((){
-                      widget.appStorage.todos.removeAt(index);
+                      todos.removeAt(index);
                   });
                 },
               ),
