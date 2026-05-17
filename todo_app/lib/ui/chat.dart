@@ -6,7 +6,6 @@ import 'package:todo_app/appStorage.dart';
 　２．ボタン追加
 　３．テキストボックス追加　「スタート！！」
 　４．返信出す（データファイルで）
-
 　終わったら、ログ、時計とか？
 */
 class ChatUI extends StatefulWidget{
@@ -30,7 +29,7 @@ class _ChatState extends State<ChatUI>{
       color: Colors.deepPurple[50],
       child: Column(//チャットボックス
         mainAxisAlignment: MainAxisAlignment.end,
-        children:[ Expanded(child: chatLst()),
+        children:[Expanded(child: chatLst()),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -65,7 +64,7 @@ class _ChatState extends State<ChatUI>{
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide(color: Colors.purple[900]),
+            borderSide: BorderSide(color: Colors.purple[900]!),
           ),
           suffixIcon: icon(),//送信ボタンの埋め込み
         ),
@@ -95,13 +94,13 @@ class _ChatState extends State<ChatUI>{
               margin: const EdgeInsets.all(4),
               decoration: BoxDecoration(
                 color: message.isAI
-                  ? Colors.indigoAccent[100]
-                  : Colors.deepPurpleAccent[100],
+                  ? Colors.indigoAccent[100]!
+                  : Colors.deepPurpleAccent[100]!,
                 borderRadius: BorderRadius.circular(12),
               ),//丸める
 
             child: Text(message.text, //ここにmessage入れる！
-              style: TextStyle(color: Colors.indigo[900],),
+              style: TextStyle(color: Colors.indigo[900]!,),
             ), 
           ),
         );
@@ -116,7 +115,7 @@ class _ChatState extends State<ChatUI>{
         onPressed: () {
           if(widget.appStorage.chats.isEmpty){
             widget.appStorage.chats.add(ChatData(
-              date: Date.today,
+              createdDate: Dates.now,
               title: "New Chat",
               messages: [],
             ),);
@@ -126,15 +125,16 @@ class _ChatState extends State<ChatUI>{
             //ユーザー
             widget.appStorage.chats[chatIndex].messages.add(//messageリストに追加！！
               ChatText(
+                createdDate: Dates.now,
                 text: controller.text, 
                 isAI: false
             ));           
             //AI返信枠
             final replies = ["いいね", "なるほど", "わかる", "それいい"];
-            final ai = replies[DateTime.now().microsecond % replies.length];
+            final ai = replies[Dates.now.microsecond % replies.length];
             
             widget.appStorage.chats[chatIndex].messages.add(
-              ChatText(text: "AI: $ai", isAI: true));//AI側だぜ！
+              ChatText(createdDate: Dates.now, text: "AI: $ai", isAI: true));//AI側だぜ！
             /*messages.add(//messageリストに追加！！
               ChatText(
                 text: "AI: $ai", 
@@ -168,7 +168,7 @@ class _ChatState extends State<ChatUI>{
               children:[ ListTile(title: const Text("新テーマ!"),
                   onTap: (){setState((){
                     widget.appStorage.chats.add(ChatData(
-                      date: Date.today,
+                      createdDate: Dates.now,
                       title: "New Chat",
                       messages: [],
                     ),);

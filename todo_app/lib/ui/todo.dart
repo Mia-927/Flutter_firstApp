@@ -8,7 +8,7 @@ import 'package:todo_app/data/todo_data.dart';
 class ToDoUI extends StatefulWidget {
   const ToDoUI({super.key, required this.appStorage, required this.selectedDate});
   final AppStorage appStorage;
-  final String selectedDate;
+  final DateTime selectedDate;
   
   @override
   State<ToDoUI> createState() => _UIState();
@@ -19,7 +19,7 @@ class _UIState extends State<ToDoUI>{
 
   Widget build(BuildContext context){
   final todos = widget.appStorage.todos
-    .where((todo) => todo.date == widget.selectedDate).toList();
+    .where((todo) => todo.createdDate == widget.selectedDate).toList();
 
     return Container(padding: EdgeInsets.all(8), 
       child: Column( children: [
@@ -37,7 +37,11 @@ class _UIState extends State<ToDoUI>{
             }
           setState(()//画面更新
             {
-              widget.appStorage.todos.add(ToDoData(date: Date.today,text: controller.text, checked: false));
+              widget.appStorage.todos.add(ToDoData(
+                createdDate: Dates.now,
+                text: controller.text, 
+                checked: false
+              ));
               controller.clear();
             });
           FocusScope.of(context).unfocus();
@@ -63,7 +67,7 @@ class _UIState extends State<ToDoUI>{
                   todos[index].checked = value!;
                     //順番入れ替え
                     widget.appStorage.todos.sort((a, b){//ここ問題あり
-                    if(a.checked == b.checked || a.date != b.date) return 0;
+                    if(a.checked == b.checked || a.createdDate != b.createdDate) return 0;
                     return a.checked ? 1 : -1;
                     });
                 });

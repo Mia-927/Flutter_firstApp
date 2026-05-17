@@ -33,7 +33,7 @@ class _MainScreen extends State<MainScreen>{
   final List<Widget> pages = [
     LogUI(appStorage: appStorage),
     const Center(child: Text("Home"),),//home(仮)
-    ToDoUI(appStorage: appStorage, selectedDate: Date.today,),
+    ToDoUI(appStorage: appStorage, selectedDate: Dates.now,),
   ];
   
   return Scaffold(

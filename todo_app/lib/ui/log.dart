@@ -15,7 +15,7 @@ class LogUI extends StatefulWidget{
 }
 
 class _LogState extends State<LogUI>{
-  late String selectedDate;
+  late DateTime selectedDate;
   double todoX = 12;
   double todoY = 80;
   late final ChatUI chatUI;
@@ -24,16 +24,16 @@ class _LogState extends State<LogUI>{
   Widget build(BuildContext context){
     //左側の日付
     final chatDates = widget.appStorage.chats
-      .map((chat) => chat.date).toSet().toList();
+      .map((chat) => chat.createdDate).toSet().toList();
     final todoDates = widget.appStorage.todos
-      .map((todo) => todo.date).toSet().toList();
+      .map((todo) => todo.createdDate).toSet().toList();
     final dates = {...chatDates, ...todoDates}.toList()..sort();
     //右側のToDo
     final selectedToDos = widget.appStorage.todos
-      .where((todo) => todo.date == selectedDate).toList();
+      .where((todo) => Dates.isSameDay(todo.createdDate, selectedDate)).toList();
     //ついでのchats
     final selectedChats = widget.appStorage.chats
-      .where((chat) => chat.date == selectedDate).toList();
+      .where((chat) => Dates.isSameDay(chat.createdDate, selectedDate)).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -48,7 +48,7 @@ class _LogState extends State<LogUI>{
                 final date = dates[index];
                 return ListTile(
                   leading: Icon(Icons.book),
-                  title: Text(date),
+                  title: Text(date.toString().split(" ")[0]),
                   subtitle: Text("Study log"),
                   selected: selectedDate == date,
 
@@ -77,14 +77,14 @@ void initState(){
   super.initState();
   chatUI = ChatUI(appStorage: widget.appStorage);
   final dates = widget.appStorage.chats
-  .map((chat) => chat.date).toSet().toList();
+  .map((chat) => chat.createdDate).toSet().toList();
 
   if(dates.isNotEmpty){
     dates.sort();
     selectedDate = dates.last;
   }
   else{
-    selectedDate = dates.isNotEmpty ? dates.last : Date.today;
+    selectedDate = dates.isNotEmpty ? dates.last : Dates.now;
   }
 }
 
@@ -92,7 +92,7 @@ void initState(){
 Widget ToDoOverlay(){
   return Positioned(
     left: todoX,
-    top: todoY,
+    top: todoY,   
     child: Draggable(
       feedback: Material(
         child: Container(width: 200, height: 200, color: Colors.purple,),
