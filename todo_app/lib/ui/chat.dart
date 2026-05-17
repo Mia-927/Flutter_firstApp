@@ -20,11 +20,16 @@ class ChatUI extends StatefulWidget{
 class _ChatState extends State<ChatUI>{
   final controller = TextEditingController();
   final scrollController = ScrollController();
-  int chatIndex = 0;
   final today = DateTime.now().toString().split(" ")[0];
+  int chatIndex = 0;
+  bool get hasChat => widget.appStorage.chats.isNotEmpty;
+ 
   
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context){ 
+    if(widget.appStorage.chats.isEmpty){
+      return Center(child: Text("No Chat"));
+    }
     return  Container( 
       width: double.infinity,
       height: double.infinity,
@@ -138,13 +143,10 @@ class _ChatState extends State<ChatUI>{
               ChatText(
                 text: controller.text, 
                 isAI: false
-            ));
-
-            //ログ追加(消した)
-           
+            ));           
             //AI返信枠
             final replies = ["いいね", "なるほど", "わかる", "それいい"];
-            final ai = replies[DateTime.now().millisecond % replies.length];
+            final ai = replies[DateTime.now().microsecond % replies.length];
             
             widget.appStorage.chats[chatIndex].messages.add(
               ChatText(text: "AI: $ai", isAI: true));//AI側だぜ！
@@ -154,8 +156,8 @@ class _ChatState extends State<ChatUI>{
                 isAI: true,
             ));*/
         });
-            controller.clear();//内容消去
-            
+        controller.clear();//内容消去
+
         Future.delayed(const Duration(milliseconds: 50),(){
           WidgetsBinding.instance.addPostFrameCallback((_){
             if(scrollController.hasClients){
@@ -170,7 +172,6 @@ class _ChatState extends State<ChatUI>{
   //+マーク
   Widget addButton(){
     return TextButton(//+マーク
-    
       onPressed: (){
         showModalBottomSheet(//ボタン押したら実行
           context: context,

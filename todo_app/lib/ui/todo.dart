@@ -53,7 +53,7 @@ class _UIState extends State<ToDoUI>{
                 key: UniqueKey(),
                 onDismissed: (direction){//スワイプする方向（右→左）
                   setState((){
-                    todos.removeAt(index);
+                    widget.appStorage.todos.remove(todos[index]);
                   });
                 },
               child:ListTile(//UI
@@ -64,9 +64,8 @@ class _UIState extends State<ToDoUI>{
                   todos[index].checked = value!;
                     //順番入れ替え
                     widget.appStorage.todos.sort((a, b){//ここ問題あり
-                    if(a.checked == b.checked) return 0;
-                    if(a.checked) return 1;
-                    return -1;
+                    if(a.checked == b.checked || a.date != b.date) return 0;
+                    return a.checked ? 1 : -1;
                     });
                 });
               },
@@ -84,7 +83,7 @@ class _UIState extends State<ToDoUI>{
                   icon: Icon(Icons.delete),
                   onPressed: () {
                     setState((){
-                      todos.removeAt(index);
+                      widget.appStorage.todos.remove(todos[index]);
                   });
                 },
               ),

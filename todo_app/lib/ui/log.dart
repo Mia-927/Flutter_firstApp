@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/appStorage.dart';
 import 'chat.dart';
 import 'todo.dart';
+
 enum SortMode{
     date, theme, todo,
   }
@@ -17,22 +18,22 @@ class _LogState extends State<LogUI>{
   late String selectedDate;
   double todoX = 12;
   double todoY = 80;
+  late final ChatUI chatUI;
 
   @override
   Widget build(BuildContext context){
     //左側の日付
     final chatDates = widget.appStorage.chats
-    .map((chat) => chat.date).toSet().toList();
+      .map((chat) => chat.date).toSet().toList();
     final todoDates = widget.appStorage.todos
-    .map((todo) => todo.date).toSet().toList();
+      .map((todo) => todo.date).toSet().toList();
     final dates = {...chatDates, ...todoDates}.toList()..sort();
     //右側のToDo
     final selectedToDos = widget.appStorage.todos
-    .where((todo) => todo.date == selectedDate).toList();
+      .where((todo) => todo.date == selectedDate).toList();
     //ついでのchats
     final selectedChats = widget.appStorage.chats
-    .where((chat) => chat.date == selectedDate).toList();
-
+      .where((chat) => chat.date == selectedDate).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -64,26 +65,26 @@ class _LogState extends State<LogUI>{
       ),
       body: Stack(
         children:[
-          ChatUI(appStorage: widget.appStorage,),
+          chatUI,
           ToDoOverlay(),
         ],
       )
     );
   }
 
-
 @override
 void initState(){
   super.initState();
-
+  chatUI = ChatUI(appStorage: widget.appStorage);
   final dates = widget.appStorage.chats
   .map((chat) => chat.date).toSet().toList();
 
   if(dates.isNotEmpty){
     dates.sort();
     selectedDate = dates.last;
-  }else{
-    selectedDate = "";
+  }
+  else{
+    selectedDate = dates.isNotEmpty ? dates.last : DateTime.now().toString().split(" ")[0];
   }
 }
 
