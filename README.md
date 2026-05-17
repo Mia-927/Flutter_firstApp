@@ -62,9 +62,10 @@ Learned about Radio/Checkbox and ProgressIndicator
    delete and remade log
   2026/05/15
    complete log
-  
-## Next Steps
   2026/05/16
+   update notebooks 
+## Next Steps
+  2026/05/17
    delete navigation button 
 - Continue video
 - finish app
