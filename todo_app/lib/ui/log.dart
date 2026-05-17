@@ -84,7 +84,7 @@ void initState(){
     selectedDate = dates.last;
   }
   else{
-    selectedDate = dates.isNotEmpty ? dates.last : DateTime.now().toString().split(" ")[0];
+    selectedDate = dates.isNotEmpty ? dates.last : Date.today;
   }
 }
 

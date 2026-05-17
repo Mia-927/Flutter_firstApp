@@ -12,7 +12,6 @@ import 'package:todo_app/appStorage.dart';
 class ChatUI extends StatefulWidget{
   ChatUI({super.key, required this.appStorage});
   final AppStorage appStorage;
-  
   @override
   State<ChatUI> createState() => _ChatState();
 }
@@ -20,24 +19,18 @@ class ChatUI extends StatefulWidget{
 class _ChatState extends State<ChatUI>{
   final controller = TextEditingController();
   final scrollController = ScrollController();
-  final today = DateTime.now().toString().split(" ")[0];
   int chatIndex = 0;
   bool get hasChat => widget.appStorage.chats.isNotEmpty;
- 
   
   @override
-  Widget build(BuildContext context){ 
-    if(widget.appStorage.chats.isEmpty){
-      return Center(child: Text("No Chat"));
-    }
+  Widget build(BuildContext context){
     return  Container( 
       width: double.infinity,
       height: double.infinity,
-      color: const Color.fromARGB(255, 230, 243, 252),
+      color: Colors.deepPurple[50],
       child: Column(//チャットボックス
         mainAxisAlignment: MainAxisAlignment.end,
-        children:[
-          Expanded(child: chatLst()),
+        children:[ Expanded(child: chatLst()),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -50,7 +43,6 @@ class _ChatState extends State<ChatUI>{
       ) 
     );
   }
-
   //入力画面 //ここにiconも入ることになる。
   Widget chatInput(){
     return Container(
@@ -61,13 +53,11 @@ class _ChatState extends State<ChatUI>{
       ),
       child: TextField(
         controller: controller,
-
         minLines: 1,//最小の入力行
         maxLines: 4,
-
         decoration: InputDecoration(
           filled: true,
-          fillColor: const Color.fromARGB(255, 255, 229, 255),
+          fillColor: Colors.purple[50],
           hintText: "今日は何する？",
           contentPadding: const EdgeInsets.symmetric(
             vertical: 12,
@@ -75,11 +65,8 @@ class _ChatState extends State<ChatUI>{
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide(
-              color: const Color.fromARGB(255, 33, 222, 243),
-            ),
+            borderSide: BorderSide(color: Colors.purple[900]),
           ),
-          
           suffixIcon: icon(),//送信ボタンの埋め込み
         ),
       ),
@@ -99,7 +86,6 @@ class _ChatState extends State<ChatUI>{
           alignment: message.isAI
           ?Alignment.centerLeft
           :Alignment.centerRight,
-
           child: 
             Container(
               padding: const EdgeInsets.symmetric(
@@ -109,13 +95,13 @@ class _ChatState extends State<ChatUI>{
               margin: const EdgeInsets.all(4),
               decoration: BoxDecoration(
                 color: message.isAI
-                  ?const Color.fromARGB(255, 190, 200, 254)
-                  :const Color.fromARGB(255, 238, 218, 254),
+                  ? Colors.indigoAccent[100]
+                  : Colors.deepPurpleAccent[100],
                 borderRadius: BorderRadius.circular(12),
               ),//丸める
 
             child: Text(message.text, //ここにmessage入れる！
-              style: TextStyle(color: const Color.fromARGB(255, 0, 24, 52),),
+              style: TextStyle(color: Colors.indigo[900],),
             ), 
           ),
         );
@@ -124,14 +110,13 @@ class _ChatState extends State<ChatUI>{
   }
   //Icon送信ボタン AIとかもここ
   Widget icon(){
-    final today = DateTime.now().toString().split(" ")[0];
     return// ButtonNavigationBarItem()
       IconButton( 
         icon: const Icon(Icons.send),
         onPressed: () {
           if(widget.appStorage.chats.isEmpty){
             widget.appStorage.chats.add(ChatData(
-              date: today,
+              date: Date.today,
               title: "New Chat",
               messages: [],
             ),);
@@ -179,27 +164,23 @@ class _ChatState extends State<ChatUI>{
             return Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                ListTile(title: Text("新テーマ！")),//それぞれ画面にPopで文字出すけど保存は同じ
-                ListTile(title: const Text("新チャット！"),
-                  onTap: (){
-                    setState((){
-                      widget.appStorage.chats.add(ChatData(
-                        date: today,
-                        title: "New Chat",
-                        messages: [],
-                      ),);
-                      chatIndex = widget.appStorage.chats.length - 1;
-                    });
-                    Navigator.pop(context);
-                  }),
-                ListTile(title: Text("次の日！")),
-              ],
-            );
+              //それぞれ画面にPopで文字出すけど保存は同じ
+              children:[ ListTile(title: const Text("新テーマ!"),
+                  onTap: (){setState((){
+                    widget.appStorage.chats.add(ChatData(
+                      date: Date.today,
+                      title: "New Chat",
+                      messages: [],
+                    ),);
+                    chatIndex = widget.appStorage.chats.length - 1;
+                  });
+                  Navigator.pop(context);
+              }),
+            ]);
           },
         );
       },
-        child: Icon(Icons.add),
+      child: Icon(Icons.add),
       );
   }
 //すべてを総合せし中身

@@ -16,14 +16,13 @@ class ToDoUI extends StatefulWidget {
 class _UIState extends State<ToDoUI>{
   @override
   final controller = TextEditingController();
-  final today = DateTime.now().toString().split(" ")[0];
 
   Widget build(BuildContext context){
   final todos = widget.appStorage.todos
     .where((todo) => todo.date == widget.selectedDate).toList();
 
-    return Container(padding: EdgeInsets.all(8), child: Column(
-      children: [
+    return Container(padding: EdgeInsets.all(8), 
+      child: Column( children: [
         TextField(
           controller: controller,
           decoration: InputDecoration(
@@ -38,7 +37,7 @@ class _UIState extends State<ToDoUI>{
             }
           setState(()//画面更新
             {
-              widget.appStorage.todos.add(ToDoData(date: today,text: controller.text, checked: false));
+              widget.appStorage.todos.add(ToDoData(date: Date.today,text: controller.text, checked: false));
               controller.clear();
             });
           FocusScope.of(context).unfocus();
