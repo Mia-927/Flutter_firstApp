@@ -18,7 +18,7 @@ class ChatUI extends StatefulWidget{
 class _ChatState extends State<ChatUI>{
   final controller = TextEditingController();
   final scrollController = ScrollController();
-  int chatIndex = 0;
+  int selectedChatIndex = 0;
   bool get hasChat => widget.appStorage.chats.isNotEmpty;
   
   @override
@@ -77,10 +77,10 @@ class _ChatState extends State<ChatUI>{
       return Center(child: Text("New Chat"));
     }
     return ListView.builder(
-      itemCount: widget.appStorage.chats[chatIndex].messages.length,
+      itemCount: widget.appStorage.chats[selectedChatIndex].messages.length,
       controller: scrollController,
       itemBuilder: (context, index){
-        final message = widget.appStorage.chats[chatIndex].messages[index];
+        final message = widget.appStorage.chats[selectedChatIndex].messages[index];
         return Align(//マップの中のリターン
           alignment: message.isAI
           ?Alignment.centerLeft
@@ -119,11 +119,11 @@ class _ChatState extends State<ChatUI>{
               title: "New Chat",
               messages: [],
             ),);
-            chatIndex = 0;
+            selectedChatIndex = 0;
           }
           setState(() {
             //ユーザー
-            widget.appStorage.chats[chatIndex].messages.add(//messageリストに追加！！
+            widget.appStorage.chats[selectedChatIndex].messages.add(//messageリストに追加！！
               ChatText(
                 createdDate: Dates.now,
                 text: controller.text, 
@@ -133,7 +133,7 @@ class _ChatState extends State<ChatUI>{
             final replies = ["いいね", "なるほど", "わかる", "それいい"];
             final ai = replies[Dates.now.microsecond % replies.length];
             
-            widget.appStorage.chats[chatIndex].messages.add(
+            widget.appStorage.chats[selectedChatIndex].messages.add(
               ChatText(createdDate: Dates.now, text: "AI: $ai", isAI: true));//AI側だぜ！
             /*messages.add(//messageリストに追加！！
               ChatText(
@@ -172,7 +172,7 @@ class _ChatState extends State<ChatUI>{
                       title: "New Chat",
                       messages: [],
                     ),);
-                    chatIndex = widget.appStorage.chats.length - 1;
+                    selectedChatIndex = widget.appStorage.chats.length - 1;
                   });
                   Navigator.pop(context);
               }),

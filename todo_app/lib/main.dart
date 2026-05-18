@@ -9,7 +9,6 @@ void main() {
 //アプリ本体
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,6 @@ class _MainScreen extends State<MainScreen>{
   Widget build(BuildContext context){
   final List<Widget> pages = [
     LogUI(appStorage: appStorage),
-    const Center(child: Text("Home"),),//home(仮)
     ToDoUI(appStorage: appStorage, selectedDate: Dates.now,),
   ];
   
@@ -46,7 +44,6 @@ class _MainScreen extends State<MainScreen>{
           onTap:(currentIndex) => setState(() => index = currentIndex),
           items:[
             BottomNavigationBarItem(icon: Icon(Icons.chat_bubble), label:'Chat'),
-            BottomNavigationBarItem(icon: Icon(Icons.home), label:'Home'),
             BottomNavigationBarItem(icon: Icon(Icons.check_box), label:'ToDo'),
           ]
         ),
