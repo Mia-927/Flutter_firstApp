@@ -19,7 +19,7 @@ class _UIState extends State<ToDoUI>{
 
   Widget build(BuildContext context){
   final todos = widget.appStorage.todos
-    .where((todo) => todo.createdDate == widget.selectedDate).toList();
+    .where((todo) => Dates.isSameDay(todo.createdDate, widget.selectedDate)).toList();
 
     return Container(padding: EdgeInsets.all(8), 
       child: Column( children: [
@@ -67,7 +67,7 @@ class _UIState extends State<ToDoUI>{
                   todos[index].checked = value!;
                     //順番入れ替え
                     widget.appStorage.todos.sort((a, b){//ここ問題あり
-                    if(a.checked == b.checked || a.createdDate != b.createdDate) return 0;
+                    if(a.checked == b.checked) return 0;
                     return a.checked ? 1 : -1;
                     });
                 });

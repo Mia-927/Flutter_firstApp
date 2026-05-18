@@ -18,23 +18,18 @@ class _LogState extends State<LogUI>{
   late DateTime selectedDate;
   double todoX = 12;
   double todoY = 80;
-  late final ChatUI chatUI;
+  //late final ChatUI chatUI;
 
   @override
-  Widget build(BuildContext context){
-    //左側の日付
-    final chatDates = widget.appStorage.chats
-      .map((chat) => chat.createdDate).toSet().toList();
-    final todoDates = widget.appStorage.todos
-      .map((todo) => todo.createdDate).toSet().toList();
-    final dates = {...chatDates, ...todoDates}.toList()..sort();
-    //右側のToDo
-    final selectedToDos = widget.appStorage.todos
-      .where((todo) => Dates.isSameDay(todo.createdDate, selectedDate)).toList();
-    //ついでのchats
-    final selectedChats = widget.appStorage.chats
-      .where((chat) => Dates.isSameDay(chat.createdDate, selectedDate)).toList();
-
+  Widget build(BuildContext context){ 
+    final allDates = {
+      ...widget.appStorage.chats.map((chat) => chat.createdDate),
+      ...widget.appStorage.todos.map((todo) => todo.createdDate)
+    }.toList()..sort();
+    
+    selectedDate = allDates.isNotEmpty
+      ? allDates.last
+      : Dates.now;
     return Scaffold(
       appBar: AppBar(
         title: const Text("ログ"),
@@ -43,14 +38,14 @@ class _LogState extends State<LogUI>{
         child: SizedBox(
             width:120, 
             child: ListView.builder(
-              itemCount: dates.length,
+              itemCount: allDates.length,
               itemBuilder:(context, index){
-                final date = dates[index];
+                final date = allDates[index];
                 return ListTile(
                   leading: Icon(Icons.book),
-                  title: Text(date.toString().split(" ")[0]),
+                  title: Text(Dates.format(date)),
                   subtitle: Text("Study log"),
-                  selected: selectedDate == date,
+                  selected: Dates.isSameDay(selectedDate, date),
 
                   onTap: (){
                     setState((){
@@ -65,7 +60,7 @@ class _LogState extends State<LogUI>{
       ),
       body: Stack(
         children:[
-          chatUI,
+          ChatUI(appStorage: widget.appStorage),
           ToDoOverlay(),
         ],
       )
@@ -75,9 +70,16 @@ class _LogState extends State<LogUI>{
 @override
 void initState(){
   super.initState();
-  chatUI = ChatUI(appStorage: widget.appStorage);
+  final allDates = {
+      ...widget.appStorage.chats.map((chat) => chat.createdDate),
+      ...widget.appStorage.todos.map((todo) => todo.createdDate)
+    }.toList()..sort();
+    
+    selectedDate = allDates.isNotEmpty
+      ? allDates.last
+      : Dates.now;
   final dates = widget.appStorage.chats
-  .map((chat) => chat.createdDate).toSet().toList();
+    .map((chat) => chat.createdDate).toSet().toList();
 
   if(dates.isNotEmpty){
     dates.sort();
@@ -93,21 +95,18 @@ Widget ToDoOverlay(){
   return Positioned(
     left: todoX,
     top: todoY,   
-    child: Draggable(
-      feedback: Material(
-        child: Container(width: 200, height: 200, color: Colors.purple,),
-      ),
-      child: Container(
-        width: 250, height: 300, 
-        color: const Color.fromARGB(255, 248, 205, 255).withValues(alpha: 0.8),
-        child: ToDoUI(appStorage: widget.appStorage, selectedDate: selectedDate),
-      ),
-      onDragEnd: (details){
+    child: GestureDetector(
+      onPanUpdate: (details){
         setState((){
-          todoX = details.offset.dx;
-          todoY = details.offset.dy;
+          todoX = (todoX + details.delta.dx).clamp(0, 300);
+          todoY = (todoY + details.delta.dy).clamp(0, 600);
         });
       },
+      child: Container(
+        width: 250, height: 300, 
+        color: Colors.purple.withValues(alpha: 0.5),
+        child: ToDoUI(appStorage: widget.appStorage, selectedDate: selectedDate),
+      ),
     ),
   );
 }
