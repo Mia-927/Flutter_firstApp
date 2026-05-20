@@ -64,6 +64,10 @@ Learned about Radio/Checkbox and ProgressIndicator
    complete log
   2026/05/16
    delete navigation button 
+  2026/05/17
+   update botebooks & fix errors
+  2026/05/18
+   fixing logs and todos
 ## Next Steps
   2026/05/17
    update notebooks ＆ fix errors
