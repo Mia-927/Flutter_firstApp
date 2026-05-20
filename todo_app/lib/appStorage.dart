@@ -4,7 +4,6 @@ import '../data/todo_data.dart';
 
 class AppStorage{
   List<ChatData> chats = [];
-  List<ToDoData> todos = [];
 }
 
 class Dates{//現在時刻

@@ -6,9 +6,8 @@ import 'package:todo_app/data/todo_data.dart';
   タスク編集*/
 
 class ToDoUI extends StatefulWidget {
-  const ToDoUI({super.key, required this.appStorage, required this.selectedDate});
-  final AppStorage appStorage;
-  final DateTime selectedDate;
+  const ToDoUI({super.key, required this.todos,});
+  final List<ToDoData> todos;
   
   @override
   State<ToDoUI> createState() => _UIState();
@@ -18,9 +17,6 @@ class _UIState extends State<ToDoUI>{
   final controller = TextEditingController();
 
   Widget build(BuildContext context){
-  final todos = widget.appStorage.todos
-    .where((todo) => Dates.isSameDay(todo.createdDate, widget.selectedDate)).toList();
-
     return Container(padding: EdgeInsets.all(8), 
       child: Column( children: [
         TextField(
@@ -37,7 +33,7 @@ class _UIState extends State<ToDoUI>{
             }
           setState(()//画面更新
             {
-              widget.appStorage.todos.add(ToDoData(
+              widget.todos.add(ToDoData(
                 createdDate: Dates.now,
                 text: controller.text, 
                 checked: false
@@ -50,23 +46,23 @@ class _UIState extends State<ToDoUI>{
       //チェックボックス
         Expanded(
           child: ListView.builder(
-            itemCount: todos.length,//リストの数だけUI作る
+            itemCount: widget.todos.length,//リストの数だけUI作る
             itemBuilder: (context, index){//1個ずつ作る関数
               return Dismissible(
                 key: UniqueKey(),
                 onDismissed: (direction){//スワイプする方向（右→左）
                   setState((){
-                    widget.appStorage.todos.remove(todos[index]);
+                    widget.todos.remove(widget.todos[index]);
                   });
                 },
               child:ListTile(//UI
               leading: Checkbox(
-              value: todos[index].checked,//なんで？
+              value: widget.todos[index].checked,//なんで？
               onChanged: (value) {//チェック変更
                 setState((){
-                  todos[index].checked = value!;
+                  widget.todos[index].checked = value!;
                     //順番入れ替え
-                    widget.appStorage.todos.sort((a, b){//ここ問題あり
+                    widget.todos.sort((a, b){//ここ問題あり
                     if(a.checked == b.checked) return 0;
                     return a.checked ? 1 : -1;
                     });
@@ -74,10 +70,10 @@ class _UIState extends State<ToDoUI>{
               },
               ),
               title:Text(
-                todos[index].text,
+                widget.todos[index].text,
                 style: TextStyle(
-                  color: todos[index].checked ? Colors.grey : Colors.black,
-                  decoration: todos[index].checked
+                  color: widget.todos[index].checked ? Colors.grey : Colors.black,
+                  decoration: widget.todos[index].checked
                   ? TextDecoration.lineThrough
                   : TextDecoration.none,
                 )
@@ -86,7 +82,7 @@ class _UIState extends State<ToDoUI>{
                   icon: Icon(Icons.delete),
                   onPressed: () {
                     setState((){
-                      widget.appStorage.todos.remove(todos[index]);
+                      widget.todos.remove(widget.todos[index]);
                   });
                 },
               ),
@@ -99,9 +95,4 @@ class _UIState extends State<ToDoUI>{
     )
     );
   }
-    /*Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 192, 129, 237), 
-        title: Text("ToDo")),
-      body: */  
 }

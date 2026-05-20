@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'ui/chat.dart';
 import 'ui/todo.dart';
+import 'data/todo_data.dart';
 import 'ui/log.dart';
 import 'appStorage.dart';
 void main() {
@@ -26,12 +27,13 @@ class MainScreen extends StatefulWidget{
 class _MainScreen extends State<MainScreen>{
   final appStorage = AppStorage();
   int index = 1;
+  final List<ToDoData> mainToDo = [];
 
   @override
   Widget build(BuildContext context){
   final List<Widget> pages = [
     LogUI(appStorage: appStorage),
-    ToDoUI(appStorage: appStorage, selectedDate: Dates.now,),
+    ToDoUI(todos: mainToDo),
   ];
   
   return Scaffold(

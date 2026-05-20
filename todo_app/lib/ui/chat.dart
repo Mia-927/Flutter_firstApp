@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../data/chat_data.dart';
+import '../data/todo_data.dart';
 import 'package:todo_app/appStorage.dart';
 /*チャット画面を作ろう！！
 　１．色を変える
@@ -9,8 +10,15 @@ import 'package:todo_app/appStorage.dart';
 　終わったら、ログ、時計とか？
 */
 class ChatUI extends StatefulWidget{
-  ChatUI({super.key, required this.appStorage});
+  ChatUI({
+    super.key, 
+    required this.appStorage, 
+    required this.selectedChatIndex,
+    required this.onNewChat,
+  });
   final AppStorage appStorage;
+  final int selectedChatIndex;
+  final VoidCallback onNewChat;
   @override
   State<ChatUI> createState() => _ChatState();
 }
@@ -18,8 +26,8 @@ class ChatUI extends StatefulWidget{
 class _ChatState extends State<ChatUI>{
   final controller = TextEditingController();
   final scrollController = ScrollController();
-  int selectedChatIndex = 0;
   bool get hasChat => widget.appStorage.chats.isNotEmpty;
+  List<ToDoData> todos = [];
   
   @override
   Widget build(BuildContext context){
@@ -77,10 +85,10 @@ class _ChatState extends State<ChatUI>{
       return Center(child: Text("New Chat"));
     }
     return ListView.builder(
-      itemCount: widget.appStorage.chats[selectedChatIndex].messages.length,
+      itemCount: widget.appStorage.chats[widget.selectedChatIndex].messages.length,
       controller: scrollController,
       itemBuilder: (context, index){
-        final message = widget.appStorage.chats[selectedChatIndex].messages[index];
+        final message = widget.appStorage.chats[widget.selectedChatIndex].messages[index];
         return Align(//マップの中のリターン
           alignment: message.isAI
           ?Alignment.centerLeft
@@ -118,12 +126,12 @@ class _ChatState extends State<ChatUI>{
               createdDate: Dates.now,
               title: "New Chat",
               messages: [],
+              todos: [],
             ),);
-            selectedChatIndex = 0;
           }
           setState(() {
             //ユーザー
-            widget.appStorage.chats[selectedChatIndex].messages.add(//messageリストに追加！！
+            widget.appStorage.chats[widget.selectedChatIndex].messages.add(//messageリストに追加！！
               ChatText(
                 createdDate: Dates.now,
                 text: controller.text, 
@@ -133,13 +141,8 @@ class _ChatState extends State<ChatUI>{
             final replies = ["いいね", "なるほど", "わかる", "それいい"];
             final ai = replies[Dates.now.microsecond % replies.length];
             
-            widget.appStorage.chats[selectedChatIndex].messages.add(
+            widget.appStorage.chats[widget.selectedChatIndex].messages.add(
               ChatText(createdDate: Dates.now, text: "AI: $ai", isAI: true));//AI側だぜ！
-            /*messages.add(//messageリストに追加！！
-              ChatText(
-                text: "AI: $ai", 
-                isAI: true,
-            ));*/
         });
         controller.clear();//内容消去
 
@@ -166,16 +169,11 @@ class _ChatState extends State<ChatUI>{
               mainAxisAlignment: MainAxisAlignment.start,
               //それぞれ画面にPopで文字出すけど保存は同じ
               children:[ ListTile(title: const Text("新テーマ!"),
-                  onTap: (){setState((){
-                    widget.appStorage.chats.add(ChatData(
-                      createdDate: Dates.now,
-                      title: "New Chat",
-                      messages: [],
-                    ),);
-                    selectedChatIndex = widget.appStorage.chats.length - 1;
-                  });
-                  Navigator.pop(context);
-              }),
+                  onTap: (){
+                    widget.appStorage.chats.add(ChatData(createdDate: Dates.now, title: "New Chat", messages: [], todos: []),);
+                    widget.onNewChat();
+                    Navigator.pop(context);
+                }),
             ]);
           },
         );
@@ -183,8 +181,4 @@ class _ChatState extends State<ChatUI>{
       child: Icon(Icons.add),
       );
   }
-//すべてを総合せし中身
-  /*Widget chatBody(){
-    return
-    }*/
 }

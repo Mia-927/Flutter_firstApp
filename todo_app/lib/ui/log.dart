@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/appStorage.dart';
 import 'chat.dart';
 import 'todo.dart';
+import 'package:todo_app/data/todo_data.dart';
 
 class LogUI extends StatefulWidget{
   const LogUI({super.key, required this.appStorage});
@@ -12,16 +13,16 @@ class LogUI extends StatefulWidget{
 }
 
 class _LogState extends State<LogUI>{
-  late DateTime selectedDate;
-  late ChatUI chatUI;
+  DateTime selectedDate = Dates.now;
   double todoX = 12;
   double todoY = 80;
+  int selectedChatIndex = 0;
 
   @override
   Widget build(BuildContext context){ 
     final allDates = {
       ...widget.appStorage.chats.map((chat) => Dates.hour(chat.createdDate)),
-      ...widget.appStorage.todos.map((todo) => Dates.hour(todo.createdDate))
+      ...widget.appStorage.chats.expand((chat) => chat.todos.map((todo) => Dates.hour(todo.createdDate)))
     }.toList()..sort();
 
     return Scaffold(
@@ -30,17 +31,18 @@ class _LogState extends State<LogUI>{
       ),
       drawer: Drawer(
         child:ListView.builder(
-          itemCount: allDates.length,
+          itemCount: widget.appStorage.chats.length,
           itemBuilder:(context, index){
+            final chat = widget.appStorage.chats[index];
             final date = allDates[index];
             return ListTile(
               leading: Icon(Icons.book),
-              title: Text(Dates.format(date)),//
+              title: Text(Dates.format(chat.createdDate)),
               subtitle: Text("Study log"),
-              selected: Dates.isSameDay(selectedDate, date),
+              selected: selectedChatIndex == index,
               onTap: (){
                 setState((){
-                  selectedDate = date;
+                  selectedChatIndex = index;
                 });
                 Navigator.pop(context);
               },
@@ -50,38 +52,21 @@ class _LogState extends State<LogUI>{
       ),
       body: Stack(
         children:[
-          chatUI,
+          ChatUI(
+            appStorage: widget.appStorage, 
+            selectedChatIndex: selectedChatIndex,
+            onNewChat: (){
+              setState((){
+                selectedDate = Dates.now;
+                selectedChatIndex = widget.appStorage.chats.length - 1;
+              });
+            }
+          ),
           ToDoOverlay(),
         ],
       )
     );
   }
-
-@override
-void initState(){
-  super.initState();
-  selectedDate = Dates.now;
-  chatUI = ChatUI(appStorage: widget.appStorage);
-  /*final allDates = {
-      ...widget.appStorage.chats.map((chat) => chat.createdDate),
-      ...widget.appStorage.todos.map((todo) => todo.createdDate)
-    }.toList()..sort();
-    
-    selectedDate = allDates.isNotEmpty
-      ? allDates.last
-      : Dates.now;
-  final dates = widget.appStorage.chats
-    .map((chat) => chat.createdDate).toSet().toList();
-
-  if(dates.isNotEmpty){
-    dates.sort();
-    selectedDate = dates.last;
-  }
-  else{
-    selectedDate = dates.isNotEmpty ? dates.last : Dates.now;
-  }*/
-}
-
 //ToDo FloatingWidget
 Widget ToDoOverlay(){
   return Positioned(
@@ -97,7 +82,10 @@ Widget ToDoOverlay(){
       child: Container(
         width: 250, height: 300, 
         color: Colors.purple.withValues(alpha: 0.5),
-        child: ToDoUI(appStorage: widget.appStorage, selectedDate: selectedDate),
+        child: ToDoUI(
+          todos: widget.appStorage.chats.isEmpty
+          ? []
+          : widget.appStorage.chats[selectedChatIndex].todos),
       ),
     ),
   );
