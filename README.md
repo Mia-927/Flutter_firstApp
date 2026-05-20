@@ -69,8 +69,8 @@ Learned about Radio/Checkbox and ProgressIndicator
   2026/05/18
    fixing logs and todos
 ## Next Steps
-  2026/05/17
-   update notebooks ＆ fix errors
+  2026/05/20
+   complete fixing todo and logs
 - Continue video
 - finish app
 
